@@ -1,0 +1,22 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+        "jsx": true,
+        "tsx": true
+    }
+},
+  "extends": [
+  "next/core-web-vitals",
+  "@lnu",
+  "plugin:@typescript-eslint/recommended"
+  ],
+  "settings": {
+    "react": {
+        "version": "detect" // Automatically detect the React version
+    }
+}
+}
