@@ -8,11 +8,12 @@ import helmet from 'helmet'
 import logger from 'morgan'
 import { router } from 'routes/router.ts'
 import 'dotenv/config'
+import { container } from 'config/inversify.config.ts';
 
 try {
   const app = express()
   //  await connectDB(process.env.RESOURCE_DB_CONNECTION_STRING)
-
+  app.set('container', container);
   // Boiler plate for security and logging
   app.use(helmet())
   app.use(express.json())
