@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "tsx src/server.ts",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "populate": "tsx populatemongo.ts"
   },
   "type": "module",
   "devDependencies": {

@@ -2,10 +2,12 @@ import 'reflect-metadata'
 import { INVERSE_TYPES } from './types.ts'
 import { SearchController } from 'controllers/SearchController.ts'
 import { Container } from 'inversify'
-import { ElasticSearchClient } from './elasticSearchClient.ts'
+import { ElasticSearchClient } from './ElasticSearchClient.ts'
+import { ElasticSync } from 'service/elasticSync.ts'
 
 const container = new Container()
 
 container.bind<SearchController>(INVERSE_TYPES.SearchController).to(SearchController)
-container.bind<IElasticClient>(INVERSE_TYPES.IElasticClient).to(ElasticSearchClient)
+container.bind<IElasticClient>(INVERSE_TYPES.IElasticClient).to(ElasticSearchClient).inSingletonScope()
+container.bind<DataSync>(INVERSE_TYPES.DataSync).to(ElasticSync).inSingletonScope()
 export { container }

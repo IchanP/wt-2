@@ -8,17 +8,17 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-let client: Client | null = null
-
 @injectable()
 export class ElasticSearchClient implements IElasticClient {
+  client: Client
   constructor () {
     this.connectElastic()
+    this.#checkConnection()
   }
 
   connectElastic () {
-    if (!client) {
-      client = new Client({
+    if (!this.client) {
+      this.client = new Client({
         node: 'https://localhost:9200',
         auth: {
           username: 'elastic',
@@ -30,14 +30,29 @@ export class ElasticSearchClient implements IElasticClient {
         }
       })
     }
-    console.log(client)
-    return client
   }
 
   getClient () {
-    if (!client) {
+    if (!this.client) {
       throw new Error('Elasticsearch client has not been initialized. Please call connectElastic first.')
     }
-    return client
+    return this.client
+  }
+
+  indexDocument (index: { index: string; body: object }, id: string) {
+    return this.client.create({ id, index: index.index, body: index.body })
+  }
+
+  // TODO: handle error
+  async #checkConnection () {
+    try {
+      const response = await this.client.cluster.health({})
+      console.log('Cluster Health:', response)
+      // Connection is successful if this point is reached
+      // You can check the status in the response, e.g., "green", "yellow", or "red"
+    } catch (error) {
+      console.error('Connection failed:', error)
+      // Handle connection failure
+    }
   }
 }
