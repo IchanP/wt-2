@@ -39,8 +39,25 @@ export class ElasticSearchClient implements IElasticClient {
     return this.client
   }
 
-  indexDocument (index: { index: string; body: object }, id: string) {
-    return this.client.create({ id, index: index.index, body: index.body })
+  indexDocument (document: ElasticIndex, id: string) {
+    this.client.create({
+      id,
+      index: document.index,
+      document: document.body
+    }).catch((error) => { console.error('err', error.message) })
+  }
+
+  updateDocument (updatedFields: UnknowableObject, id: string, index: string) {
+    this.client.update({
+      id,
+      index,
+      doc: {
+        ...updatedFields
+      }
+
+    }).then(res => console.log(res)).catch((error) => {
+      console.error('Failed to update document:', error.message)
+    })
   }
 
   // TODO: handle error

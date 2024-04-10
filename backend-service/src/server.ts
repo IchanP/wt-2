@@ -10,10 +10,14 @@ import { router } from 'routes/router.ts'
 import 'dotenv/config'
 import { container } from 'config/inversify.config.ts'
 import { connectDB } from 'config/mongoose.ts'
+import { INVERSE_TYPES } from 'config/types.ts'
 
 try {
   const app = express()
+  // Start DB and sync data to elastic
   await connectDB(process.env.MONGO_CONNECTION_STRING)
+  container.get<DataSync>(INVERSE_TYPES.DataSync).startSync()
+
   app.set('container', container)
   // Boiler plate for security and logging
   app.use(helmet())

@@ -1,12 +1,18 @@
 import { Client } from '@elastic/elasticsearch'
-import { WriteResponseBase } from '@elastic/elasticsearch/lib/api/types.js'
 
 declare global {
+    type ElasticIndex = {
+        index: string;
+        body: object;
+    }
+    type UnknowableObject = { [key: string]: string | number }
+
     interface IElasticClient {
     connectElastic(): void;
     getClient(): Client;
-    indexDocument (index: { index: string; body: object }, id: string): Promise<WriteResponseBase>
- }
+    indexDocument (index: ElasticIndex, id: string): void;
+    updateDocument (fieldsToUpdate: UnknowableObject, id: string, index: string): void;
+    }
     interface ExtendedError extends Error {
         status: number;
         code: number;

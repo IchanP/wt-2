@@ -22,7 +22,7 @@ const syncer = container.get<DataSync>(INVERSE_TYPES.DataSync)
 syncer.startSync()
 
 await connectDB(process.env.MONGO_CONNECTION_STRING as string)
-const file = fs.readFileSync('../anime-offline-database-minified.json', 'utf-8')
+/*const file = fs.readFileSync('../anime-offline-database-minified.json', 'utf-8')
 const animes = await JSON.parse(file)
 
 let i = 1
@@ -31,13 +31,19 @@ for (const animeItem of animes.data) {
   const animeModel = new AnimeModel(animeItem)
 
   await animeModel.save()
-  console.log(parseFloat((i / length * 100).toString()).toFixed(2) + '%')
+  if (i === 10) {
+    break
+  }
+  if (i % 100 === 0) {
+    console.log(parseFloat((i / length * 100).toString()).toFixed(2) + '%')
+  }
   i++
-}
+} */
+
+// client.indices.delete({ index: 'anime' }).catch(err => { console.error('err', err.message) })
 
 client.count({ index: 'anime' }).then((res) => {
   console.log('Count:', res.count)
 }).catch(err => {
-  console.error('error')
-  const x = err
+  console.error('error', err.message)
 })
