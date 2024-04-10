@@ -1,12 +1,12 @@
 import express from 'express'
-import { INVERSE_TYPES } from 'config/types'
-import { container } from 'config/inversify.config'
-import { SearchController } from 'controllers/SearchController'
+import { INVERSE_TYPES } from 'config/types.ts'
+import { container } from 'config/inversify.config.ts'
+import { SearchController } from 'controllers/SearchController.ts'
 
 const controller: SearchController = container.get<SearchController>(INVERSE_TYPES.SearchController)
 export const router = express.Router()
 
-router.get('/', (req, res) => {
+router.get('/search', (req, res) => {
   controller.search(req, res)
 })
 

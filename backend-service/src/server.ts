@@ -14,6 +14,7 @@ import { INVERSE_TYPES } from 'config/types.ts'
 
 try {
   const app = express()
+
   // Start DB and sync data to elastic
   await connectDB(process.env.MONGO_CONNECTION_STRING)
   container.get<DataSync>(INVERSE_TYPES.DataSync).startSync()

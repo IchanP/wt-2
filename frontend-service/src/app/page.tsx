@@ -12,7 +12,8 @@ export default function Home (): JSX.Element {
           <h1 className="text-4xl font-bold">Anime Data Visualization [Name Pending]</h1>
           <p className="text-2s">Visualization of over 33,000 anime from x to {new Date().getFullYear()}</p>
         <div className="flex flex-col items-center justify-between">
-        <TestButton />
+        <TestButton endPoint='api/search'/>
+        <TestButton endPoint='api/update'/>
         </div>
       </div>
       </div>

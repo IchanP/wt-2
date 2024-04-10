@@ -1,7 +1,6 @@
 import { INVERSE_TYPES } from 'config/types.ts'
 import { inject, injectable } from 'inversify'
 import { AnimeModel } from 'models/Anime.ts'
-import { Document } from 'mongoose'
 
 interface IAnimeDocument extends IAnime {
     _id: string,
@@ -32,6 +31,7 @@ export class ElasticSync implements DataSync {
         } else if (change.operationType === 'update') {
           await this.#updateAnimeDocument(change)
         } else if (change.operationType === 'delete') {
+          // TODO: Implement delete
           //   await this.esClient.deleteDocument(change.documentKey)
         }
       })

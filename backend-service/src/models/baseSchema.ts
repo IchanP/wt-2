@@ -2,7 +2,7 @@
  * Credit to Mathias Loock for the idea and general structure of this file.
  */
 
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose'
 
 interface CustomDoc extends mongoose.Document {
   _id: string;
@@ -20,12 +20,12 @@ const conversionOptions = {
    * @param {mongoose.Document} ret - The plain object representation which has been converted.
    */
   transform: (doc: mongoose.Document, ret: CustomDoc) => {
-    delete ret._id;
-    delete ret.id;
-    delete ret.createdAt;
-    delete ret.updatedAt;
+    delete ret._id
+    delete ret.id
+    delete ret.createdAt
+    delete ret.updatedAt
   }
-};
+}
 
 const baseSchema = new Schema({}, {
   toJSON: conversionOptions,
@@ -33,6 +33,6 @@ const baseSchema = new Schema({}, {
   timestamps: true,
   optimisticConcurrency: true
 }
-);
+)
 
-export const BASE_SCHEMA = Object.freeze(baseSchema);
+export const BASE_SCHEMA = Object.freeze(baseSchema)

@@ -3,14 +3,16 @@
 /**
  * A test button for development.
  *
+ * @param {React.PropsWithChildren} root0 - The props.
+ * @param {string} root0.endPoint - The endpoint to test.
  * @returns {JSX.Element} The test button
  */
-const TestButton = () => {
+const TestButton = ({ endPoint }: { endPoint: string}): JSX.Element => {
   /**
    * Handles the click event.
    */
   const handleClick = async () => {
-    await fetch('/api/search')
+    await fetch(endPoint)
   }
   return (
         <div>

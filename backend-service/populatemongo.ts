@@ -22,26 +22,29 @@ const syncer = container.get<DataSync>(INVERSE_TYPES.DataSync)
 syncer.startSync()
 
 await connectDB(process.env.MONGO_CONNECTION_STRING as string)
-/*const file = fs.readFileSync('../anime-offline-database-minified.json', 'utf-8')
-const animes = await JSON.parse(file)
+await populate()
+// deleteIndex()
 
-let i = 1
-const length = animes.data.length
-for (const animeItem of animes.data) {
-  const animeModel = new AnimeModel(animeItem)
+async function populate () {
+  const file = fs.readFileSync('../anime-offline-database-minified.json', 'utf-8')
+  const animes = await JSON.parse(file)
 
-  await animeModel.save()
-  if (i === 10) {
-    break
+  let i = 1
+  const length = animes.data.length
+  for (const animeItem of animes.data) {
+    const animeModel = new AnimeModel(animeItem)
+
+    await animeModel.save()
+
+    if (i % 100 === 0) {
+      console.log(parseFloat((i / length * 100).toString()).toFixed(2) + '%')
+    }
+    i++
   }
-  if (i % 100 === 0) {
-    console.log(parseFloat((i / length * 100).toString()).toFixed(2) + '%')
-  }
-  i++
-} */
-
-// client.indices.delete({ index: 'anime' }).catch(err => { console.error('err', err.message) })
-
+}
+function deleteIndex (): void {
+  client.indices.delete({ index: 'anime' }).catch(err => { console.error('err', err.message) })
+}
 client.count({ index: 'anime' }).then((res) => {
   console.log('Count:', res.count)
 }).catch(err => {
