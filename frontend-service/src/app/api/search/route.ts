@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 export async function GET (req: NextRequest) {
   // TODO move this crap out and also change the url name also add a search query and stuff
-  const x = await fetch(process.env.BACKEND_URL as string, {
+  const x = await fetch(process.env.BACKEND_URL + '/search' as string, {
     // TODO may add cache?
     cache: 'no-cache'
   })

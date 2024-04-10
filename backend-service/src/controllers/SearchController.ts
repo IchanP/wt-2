@@ -1,27 +1,13 @@
 import { Request, Response } from 'express'
-import { injectable } from 'inversify'
-import { Client } from '@elastic/elasticsearch'
-import fs from 'fs'
-import path from 'path'
+import { injectable, inject } from 'inversify'
 import 'dotenv/config'
+import { Client } from '@elastic/elasticsearch'
+import { INVERSE_TYPES } from 'config/types.ts'
 
+// TODO move elastic search client to separate class
 @injectable()
 export class SearchController {
-  #client: Client
-  constructor () {
-    this.#client = new Client({
-      node: 'https://localhost:9200',
-      auth: {
-        username: 'elastic',
-        password: process.env.ELASTIC_PW
-      },
-      tls: {
-        rejectUnauthorized: false,
-        ca: fs.readFileSync(path.resolve(__dirname, '../http_ca.crt'))
-      }
-    })
-    this.#checkConnection()
-  }
+  @inject(INVERSE_TYPES.IElasticClient) private service: IElasticClient
 
   /**
    * Handles the search request.
@@ -31,13 +17,13 @@ export class SearchController {
    * @returns {Promise<Response>} The response
    */
   async search (req: Request, res: Response): Promise<Response> {
-    // TODO move this to separate class eventually
-
+    this.#checkConnection()
   }
 
   async #checkConnection () {
     try {
-      const response = await this.#client.cluster.health({})
+      const client: Client = this.service.getClient()
+      const response = await client.cluster.health({})
       console.log('Cluster Health:', response)
       // Connection is successful if this point is reached
       // You can check the status in the response, e.g., "green", "yellow", or "red"
