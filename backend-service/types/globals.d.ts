@@ -42,7 +42,9 @@ declare global {
             string: string;
         };
     }
-
+    interface ISearchAnime {
+        searchAnime(query: string, fields: Array<string>, searchParam?: Array<number>): Promise<IAnime[]>
+    }
     interface DataSync {
         startSync(): void;
     }

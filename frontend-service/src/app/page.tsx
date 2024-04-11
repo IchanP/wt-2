@@ -10,7 +10,7 @@ export default function Home (): JSX.Element {
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
         <div className="flex flex-col items-center justify-between">
           <h1 className="text-4xl font-bold">Anime Data Visualization [Name Pending]</h1>
-          <p className="text-2s">Visualization of over 33,000 anime from x to {new Date().getFullYear()}</p>
+          <p className="text-2s">Visualization of over 33,000 anime from 1907 to {new Date().getFullYear()}</p>
         <div className="flex flex-col items-center justify-between">
         <TestButton endPoint='api/search'/>
         <TestButton endPoint='api/update'/>
