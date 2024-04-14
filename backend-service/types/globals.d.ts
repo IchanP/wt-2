@@ -58,6 +58,6 @@ declare global {
     }
     interface ElasticIAnimeRepo {
         getAnimeTags(): Promise<BucketData[]>
-        getTagDataByYear(tag: string): Promise<BucketData[]>
+        getTagDataByYear(tag: string, afterYear: number): Promise<BucketData[]>
     }
 }

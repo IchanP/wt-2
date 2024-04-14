@@ -16,6 +16,7 @@ import { buildTimeChartTrace } from '@/app/utils/plotlyTypeBuilder'
 const TimeChartClient = ({ tags }: {tags: Array<string>}): React.JSX.Element => {
   const [excluded, setExcluded] = useState<Array<string>>([])
   const [data, setData] = useState<Partial<PlotData>[]>([])
+  const yearRange: Span = { lowest: 1975, highest: new Date().getFullYear() }
   /**
    * Fetches the tag that was selected and sets it as an unselectable tag in the TimeChart component.
    *
@@ -45,6 +46,7 @@ const TimeChartClient = ({ tags }: {tags: Array<string>}): React.JSX.Element => 
         />
         <TimeChart
          data={data}
+         yearRange={yearRange}
         />
         </>
   )
