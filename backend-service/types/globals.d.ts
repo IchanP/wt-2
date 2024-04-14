@@ -1,4 +1,5 @@
 import { Client } from '@elastic/elasticsearch'
+import { AggregationsCardinalityAggregate } from '@elastic/elasticsearch/lib/api/types.js'
 
 declare global {
     type ElasticIndex = {
@@ -6,13 +7,17 @@ declare global {
         body: object;
     }
     type UnknowableObject = { [key: string]: string | number }
-
+    type BucketData = { key: string, doc_count: number }
+    type TagData = { tag: string, data: BucketData[] }
     interface IElasticClient {
     connectElastic(): void;
     getClient(): Client;
     indexDocument (index: ElasticIndex, id: string): void;
     updateDocument (fieldsToUpdate: UnknowableObject, id: string, index: string): void;
     }
+    interface AggregateBuckets extends AggregationsCardinalityAggregate {
+        buckets: BucketData[]
+      }
     interface ExtendedError extends Error {
         status: number;
         code: number;
@@ -43,9 +48,16 @@ declare global {
         };
     }
     interface ISearchAnime {
-        searchAnime(query: string, fields: Array<string>, searchParam?: Array<number>): Promise<IAnime[]>
+        searchAnime(query: string, fields: Array<string>, searchParam?: Array<number>): Promise<IAnime[]>;
+        findGenreTotals(): Promise<BucketData[]>
+        getAllTags(): Promise<string[]>
+        getTagData(tag: string): Promise<TagData>
     }
     interface DataSync {
         startSync(): void;
+    }
+    interface ElasticIAnimeRepo {
+        getAnimeTags(): Promise<BucketData[]>
+        getTagDataByYear(tag: string): Promise<BucketData[]>
     }
 }

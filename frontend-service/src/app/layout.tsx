@@ -10,9 +10,11 @@ export const metadata: Metadata = {
 }
 
 /**
+ * The root layout component.
  *
- * @param root0
- * @param root0.children
+ * @param {React.PropsWithChildren} root0 - The props.
+ * @param {React.ReactNode} root0.children - The children.
+ * @returns {JSX.Element} The root layout component.
  */
 export default function RootLayout ({
   children

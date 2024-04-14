@@ -17,19 +17,44 @@ export class SearchController {
    */
   async search (req: Request, res: Response): Promise<Response> {
     try {
-      const keyword = req.body.keyword
-      const searchFields: Array<string> = req.body.searchFields
-
-      const found = await this.service.searchAnime(keyword, searchFields)
-
+      // TODO check if undefined and if so throw error
+      const keyword = req.query.keyword as string
+      const searchFields: Array<string> = req.query.parsearchFields as Array<string>
+      console.log(req.query)
+      // const found = await this.service.searchAnime(keyword, searchFields)
       // const found = await this.#findLowestAnimeSeasonYear()
-      console.log(found.length)
+      const data = await this.service.findGenreTotals()
+      // console.log(found.length)
 
-      return res.json({ message: 'search' })
+      return res.json({ message: 'search', data })
     } catch (e: unknown) {
       const err = e as Error
       console.error(err.message)
       // TODO error handling
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+  }
+
+  async fetchTags (req: Request, res: Response) {
+    try {
+      const tags = await this.service.getAllTags()
+      return res.json({ data: tags })
+    } catch (e: unknown) {
+      const err = e as Error
+      console.error(err.message)
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+  }
+
+  async fetchTagData (req: Request, res: Response) {
+    // TODO error handling incase query is undefined
+    try {
+      const tag = req.query.tagname as string
+      const data = await this.service.getTagData(tag)
+      return res.json({ data })
+    } catch (e: unknown) {
+      const err = e as Error
+      console.error(err.message)
       return res.status(500).json({ message: 'Internal server error' })
     }
   }

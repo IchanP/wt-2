@@ -1,4 +1,5 @@
-import TestButton from './testcomponent/test'
+import BarChart from './components/BarChart'
+import TimeChartFetcher from './components/TimeChart/components/TimeChartFetcher/TimeChartFetcher'
 /**
  * The main page of the application.
  *
@@ -12,8 +13,9 @@ export default function Home (): JSX.Element {
           <h1 className="text-4xl font-bold">Anime Data Visualization [Name Pending]</h1>
           <p className="text-2s">Visualization of over 33,000 anime from 1907 to {new Date().getFullYear()}</p>
         <div className="flex flex-col items-center justify-between">
-        <TestButton endPoint='api/search'/>
-        <TestButton endPoint='api/update'/>
+        <TimeChartFetcher />
+        <br/>
+        <BarChart />
         </div>
       </div>
       </div>

@@ -1,9 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+
+export const dynamic = 'force-dynamic'
+
 /**
+ * Handles requests to the update API.
  *
- * @param req
+ * @returns {NextResponse} - Returns a response object.
  */
-export async function GET (req: NextRequest) {
+export async function GET () {
   const x = await fetch(process.env.BACKEND_URL + '/search/update' as string, {
     // TODO may add cache?
     cache: 'no-cache'

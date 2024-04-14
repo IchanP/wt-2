@@ -10,6 +10,14 @@ router.get('/search', (req, res) => {
   controller.search(req, res)
 })
 
+router.get('/tag', (req, res) => {
+  controller.fetchTagData(req, res)
+})
+
+router.get('/tags', (req, res) => {
+  controller.fetchTags(req, res)
+})
+
 router.get('/update', (req, res) => {
   controller.update(req, res)
 })
