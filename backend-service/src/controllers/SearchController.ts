@@ -50,7 +50,11 @@ export class SearchController {
     // TODO error handling incase query is undefined
     try {
       const tag = req.query.tagname as string
-      const data = await this.service.getTagData(tag)
+      // TODO throw error if not number
+      // Parseint to ensure it's a number can throw error if not
+      const earliest = parseInt(req.query.earliest as string)
+      const latest = parseInt(req.query.latest as string)
+      const data = await this.service.getTagData(tag, { earliest, latest })
       return res.json({ data })
     } catch (e: unknown) {
       const err = e as Error

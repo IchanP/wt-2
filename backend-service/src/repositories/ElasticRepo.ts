@@ -24,7 +24,7 @@ export class ElasticRepo implements ElasticIAnimeRepo {
    return response.aggregations.tags.buckets
  }
 
- async getTagDataByYear (tag: string, afterYear: number): Promise<BucketData[]> {
+ async getTagDataByYear (tag: string, yearRange: YearRange): Promise<BucketData[]> {
    const response: SearchResponse<unknown, Record<string, AggregateBuckets>> = await this.service.getClient().search({
      index: 'anime',
      body: {
@@ -40,19 +40,18 @@ export class ElasticRepo implements ElasticIAnimeRepo {
          terms: {
            field: 'animeSeason.year',
            size: 100
-         },
-         filter: {
-           range: {
-             'animeSeason.year': {
-               gte: afterYear
-             }
-           }
+         }
+       }
+     },
+     post_filter: {
+       range: {
+         'animeSeason.year': {
+           gte: yearRange.earliest,
+           lte: yearRange.latest
          }
        }
      }
    })
    return response.aggregations.years.buckets
  }
-
-  //  return response.aggregations.tags.buckets
 }

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import OptionTags from '../OptionTags/OptionTags'
 import TimeChart from '../TimeChart/TimeChart'
-import { Data, PlotData } from 'plotly.js'
+import { PlotData } from 'plotly.js'
 import { buildTimeChartTrace } from '@/app/utils/plotlyTypeBuilder'
 
 /**
@@ -26,7 +26,7 @@ const TimeChartClient = ({ tags }: {tags: Array<string>}): React.JSX.Element => 
   const setSelectedTag = async (tag: string, color: string | undefined) => {
     const response = await fetch('api/tags', {
       method: 'POST',
-      body: JSON.stringify({ tag })
+      body: JSON.stringify({ tag, range: yearRange })
     })
     if (!response.ok) {
       // TODO handle this

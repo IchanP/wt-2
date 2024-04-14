@@ -9,6 +9,7 @@ declare global {
     type UnknowableObject = { [key: string]: string | number }
     type BucketData = { key: string, doc_count: number }
     type TagData = { tag: string, data: BucketData[] }
+    type YearRange = { earliest: number, latest: number}
     interface IElasticClient {
     connectElastic(): void;
     getClient(): Client;
@@ -51,7 +52,7 @@ declare global {
         searchAnime(query: string, fields: Array<string>, searchParam?: Array<number>): Promise<IAnime[]>;
         findGenreTotals(): Promise<BucketData[]>
         getAllTags(): Promise<string[]>
-        getTagData(tag: string): Promise<TagData>
+        getTagData(tag: string, yearRange: YearRange): Promise<TagData>
     }
     interface DataSync {
         startSync(): void;
