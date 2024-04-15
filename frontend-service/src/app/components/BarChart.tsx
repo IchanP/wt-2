@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import TestButton from '../testcomponent/test'
-import { Data } from 'plotly.js'
+import { PlotData } from 'plotly.js'
 import dynamic from 'next/dynamic'
 const Plot = dynamic(() => { return import('react-plotly.js') }, { ssr: false })
 
@@ -12,7 +12,7 @@ const Plot = dynamic(() => { return import('react-plotly.js') }, { ssr: false })
  * @returns {JSX.Element} The bar chart component.
  */
 const BarChart = (): JSX.Element => {
-  const [data, setData] = useState<Data[]>([{ type: 'bar', x: [1, 2, 3], y: [2, 6, 3] }])
+  const [data, setData] = useState<Partial<PlotData>[]>([{ type: 'bar', x: [1, 2, 3], y: [2, 6, 3] }])
   return (
     <>
     <Plot
@@ -22,7 +22,7 @@ const BarChart = (): JSX.Element => {
     <TestButton
     text="Bar Chart"
     endPoint="api/search"
-    data={setData as StateFunction<Data>}
+    data={setData as StateFunction<Partial<PlotData>>}
     />
     </>
   )

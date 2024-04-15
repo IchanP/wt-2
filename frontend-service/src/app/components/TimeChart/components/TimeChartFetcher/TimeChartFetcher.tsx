@@ -1,3 +1,4 @@
+import { generateRandomColor } from '@/app/utils'
 import TimeChartClient from '../TimeChartClient/TimeChartClient'
 
 /**
@@ -12,12 +13,13 @@ const TimeChartFetcher = async (): Promise<React.JSX.Element> => {
    *
    * @returns  {Promise<Array<string>>} - Returns the tags in an array of strings.
    */
-  const fetchTags = async (): Promise<Array<string>> => {
+  const fetchTags = async (): Promise<Array<MappedTag>> => {
     const response = await fetch(`${process.env.OWN_BASE_URL}/api/tags`, {
       cache: 'no-cache'
     })
     const data = await response.json()
-    return data.data
+    const coloredTags: MappedTag[] = data.data.map((tag: string) => ({ tag, color: generateRandomColor() }))
+    return coloredTags.sort()
   }
 
   const allTags = await fetchTags()
