@@ -53,6 +53,7 @@ declare global {
         findGenreTotals(): Promise<BucketData[]>
         getAllTags(): Promise<string[]>
         getTagData(tag: string, yearRange: YearRange): Promise<TagData>
+        getTotalByYear(yearRange: YearRange): Promise<TagData>
     }
     interface DataSync {
         startSync(): void;
@@ -60,5 +61,6 @@ declare global {
     interface ElasticIAnimeRepo {
         getAnimeTags(): Promise<BucketData[]>
         getTagDataByYear(tag: string, yearRange: YearRange): Promise<BucketData[]>
+        getTotalAnimeByYear(yearRange: YearRange): Promise<BucketData[]>
     }
 }

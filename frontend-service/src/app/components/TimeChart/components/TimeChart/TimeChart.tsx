@@ -11,11 +11,12 @@ const Plot = dynamic(() => { return import('react-plotly.js') }, { ssr: false })
  * @returns {React.JSX.Element} The time chart component.
  */
 const TimeChart = ({ data, yearRange }: {data: Partial<PlotData>[], yearRange: Span}): React.JSX.Element => {
+  console.log(data)
   return (
         <>
         <Plot
         data={data as unknown as Data[]}
-        layout={{ showlegend: false, width: 1500, title: 'A Time Chart', xaxis: { range: [yearRange.lowest, yearRange.highest], dtick: 1 }, modebar: { orientation: 'v' }, legend: { orientation: 'h' } }}
+        layout={{ width: 1500, title: `Popularity chart of tags since ${yearRange.lowest} to ${yearRange.highest}`, xaxis: { range: [yearRange.lowest, yearRange.highest], dtick: 1 }, modebar: { orientation: 'v' }, legend: { orientation: 'h' } }}
         config={{ displayModeBar: true }}
         />
         </>

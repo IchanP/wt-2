@@ -63,6 +63,20 @@ export class SearchController {
     }
   }
 
+  async fetchTotalByYear (req: Request, res:Response) {
+    // TODO error handling
+    try {
+      const earliest = parseInt(req.query.earliest as string)
+      const latest = parseInt(req.query.latest as string)
+      const data = await this.service.getTotalByYear({ earliest, latest })
+      return res.json({ data })
+    } catch (e: unknown) {
+      const err = e as Error
+      console.error(err.message)
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+  }
+
   async update (req: Request, res: Response): Promise<Response> {
     this.#number++
     await AnimeModel.updateOne({ animeId: 1 }, { title: `new ${this.#number}` })

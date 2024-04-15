@@ -9,6 +9,8 @@ router.get('/tag', searchRouter)
 
 router.get('/tags', searchRouter)
 
+router.get('/total', searchRouter)
+
 router.get('/', (req, res) => {
   return res.json({ message: 'Hello from the backend!' })
 })

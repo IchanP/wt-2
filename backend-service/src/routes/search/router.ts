@@ -18,6 +18,10 @@ router.get('/tags', (req, res) => {
   controller.fetchTags(req, res)
 })
 
+router.get('/total', (req, res) => {
+  controller.fetchTotalByYear(req, res)
+})
+
 router.get('/update', (req, res) => {
   controller.update(req, res)
 })

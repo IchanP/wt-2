@@ -9,9 +9,8 @@ export const dynamic = 'force-dynamic'
  * @returns {Promise<NextResponse>} - Returns a response object.
  */
 export async function GET (): Promise<NextResponse> {
-  // TODO make it cacheable
   // TODO error handling
-  const response = await fetch(process.env.BACKEND_URL + '/tags', { cache: 'no-cache' })
+  const response = await fetch(process.env.BACKEND_URL + '/tags', { cache: 'force-cache' })
   const data = await response.json()
   return NextResponse.json({ data: data.data })
 }

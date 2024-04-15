@@ -61,6 +61,11 @@ export class SearchService implements ISearchAnime {
     return { tag, data: tagData }
   }
 
+  async getTotalByYear (yearRange: YearRange): Promise<TagData> {
+    const total = await this.repo.getTotalAnimeByYear(yearRange)
+    return { tag: 'Total', data: total }
+  }
+
   async findGenreTotals () {
     try {
       const response: SearchResponse<unknown, Record<string, AggregateBuckets>> = await this.service.getClient().search({

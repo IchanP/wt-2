@@ -22,7 +22,8 @@ export function buildTimeChartTrace (data: TagData, color: string): Partial<Plot
     name: data.tag,
     x: [...years],
     y: [...totals],
-    line: { color }
+    line: { color },
+    showlegend: false
   }
 
   return trace
