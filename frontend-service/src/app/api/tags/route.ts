@@ -24,7 +24,7 @@ export async function GET (): Promise<NextResponse> {
 export async function POST (req: NextRequest): Promise<NextResponse> {
   // TODO error handling check whether tag equals data.tag and throw error if not
   const body = await req.json()
-  const tag = body.tag
+  const tag = encodeURIComponent(body.tag)
   const tagColor = body.tagColor
   const yearRange = body.range as Span
   const response = await fetch(process.env.BACKEND_URL + '/tag' + `?tagname=${tag}&earliest=${yearRange.lowest}&latest=${yearRange.highest}`, {
