@@ -56,7 +56,6 @@ export class ElasticRepo implements ElasticIAnimeRepo {
  }
 
  async getTotalAnimeByYear (yearRange: YearRange): Promise<BucketData[]> {
-   console.log(yearRange)
    const response: SearchResponse<unknown, Record<string, AggregateBuckets>> = await this.service.getClient().search({
      index: 'anime',
      body: {

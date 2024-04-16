@@ -51,7 +51,7 @@ export class AnimeSearchService implements ISearchAnime {
     return tags.map(tag => tag.key)
   }
 
-  async countTagsByYear (tag: string, yearRange: YearRange): Promise<TagData> {
+  async countTagByYear (tag: string, yearRange: YearRange): Promise<TagData> {
     const tagData = await this.repo.getTagDataByYear(tag, yearRange)
     return { tag, data: tagData }
   }

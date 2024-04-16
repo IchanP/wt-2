@@ -13,7 +13,7 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
   // TODO error handling
   const body = await req.json()
   const yearRange = body.range
-  const response = await fetch(process.env.BACKEND_URL + '/api/anime/count' + `?earliest=notanumber&latest=${yearRange.highest}`, {
+  const response = await fetch(process.env.BACKEND_URL + '/api/anime/count' + `?earliest=${yearRange.lowest}&latest=${yearRange.highest}`, {
     method: 'GET',
     // TODO force-cache
     cache: 'no-cache'

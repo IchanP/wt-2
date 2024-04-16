@@ -30,7 +30,7 @@ export class AnimeController {
       }
 
       const { earliest, latest } = this.#parseEarleistAndLatest(req)
-      const data = await this.service.countTagsByYear(tag, { earliest, latest })
+      const data = await this.service.countTagByYear(tag, { earliest, latest })
       return res.json({ data })
     } catch (e: unknown) {
       let err = e as Error

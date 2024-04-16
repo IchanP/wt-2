@@ -51,7 +51,7 @@ declare global {
     interface ISearchAnime {
         searchAnime(query: string, fields: Array<string>, searchParam?: Array<number>): Promise<IAnime[]>;
         nameAllTags(): Promise<string[]>
-        countTagsByYear(tag: string, yearRange: YearRange): Promise<TagData>
+        countTagByYear(tag: string, yearRange: YearRange): Promise<TagData>
         countAnime(yearRange: YearRange): Promise<TagData>
     }
     interface DataSync {
