@@ -35,8 +35,7 @@ export class ElasticSync implements DataSync {
         } else if (change.operationType === 'update') {
           await this.#updateAnimeDocument(change)
         } else if (change.operationType === 'delete') {
-          // TODO: Implement delete
-          //   await this.esClient.deleteDocument(change.documentKey)
+          await this.#deleteAnimeDocument(change.documentKey)
         }
       })
     }
@@ -50,7 +49,12 @@ export class ElasticSync implements DataSync {
       const id = document.documentKey._id.toString()
       const updatedFields = document.updateDescription.updatedFields
       delete updatedFields.updatedAt
-      this.esClient.updateDocument(updatedFields, id, this.#elasticIndex)
+      this.esClient.deleteDocument(id, this.#elasticIndex)
+    }
+
+    async #deleteAnimeDocument (documentKey: { _id: string }) {
+      const id = documentKey._id.toString()
+      this.esClient.deleteDocument(id, this.#elasticIndex)
     }
 
     #buildIndex (document: IAnimeDocument) {

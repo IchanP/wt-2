@@ -60,6 +60,17 @@ export class ElasticSearchClient implements IElasticClient {
     })
   }
 
+  deleteDocument (id: string, index: string) {
+    this.client.delete({
+      id,
+      index
+    }).then((res) => {
+      console.log('Document deleted:', res)
+    }).catch((error) => {
+      console.error('Failed to delete document:', error.message)
+    })
+  }
+
   // TODO: handle error
   async #checkConnection () {
     try {

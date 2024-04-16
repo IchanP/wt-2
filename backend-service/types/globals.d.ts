@@ -1,5 +1,5 @@
 import { Client } from '@elastic/elasticsearch'
-import { AggregationsCardinalityAggregate } from '@elastic/elasticsearch/lib/api/types.js'
+import { AggregationsAggregate, AggregationsCardinalityAggregate, SearchResponse } from '@elastic/elasticsearch/lib/api/types.js'
 
 declare global {
     type ElasticIndex = {
@@ -15,6 +15,7 @@ declare global {
     getClient(): Client;
     indexDocument (index: ElasticIndex, id: string): void;
     updateDocument (fieldsToUpdate: UnknowableObject, id: string, index: string): void;
+    deleteDocument (id: string, index: string): void;
     }
     interface AggregateBuckets extends AggregationsCardinalityAggregate {
         buckets: BucketData[]
@@ -58,7 +59,7 @@ declare global {
         startSync(): void;
     }
     interface ElasticIAnimeRepo {
-        searchMultiMatch(query: string, fields: Array<string>, nextPageStartPoint: Array<number>, size: number): Promise<IAnime[]>
+        searchMultiMatch(query: string, fields: Array<string>, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>
         getAnimeTags(): Promise<BucketData[]>
         getTagDataByYear(tag: string, yearRange: YearRange): Promise<BucketData[]>
         getTotalAnimeByYear(yearRange: YearRange): Promise<BucketData[]>
