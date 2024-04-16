@@ -1,6 +1,7 @@
 // TODO make docs for endpoints
 // TODO add return examples?
 // TODO also add whether the endpoint requires authentication or not (they all do)
+// TODO move this to doc folder and link to it from the main README.md
 
 # Elastic + MongoDB Backend Service
 

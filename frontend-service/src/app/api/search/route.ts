@@ -12,7 +12,7 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
   // TODO error handling
   const body = await req.json()
   // TODO maybe make it more general purpose so require that the searchFields are passed in the body
-  const data = await fetch(process.env.BACKEND_URL + `/search?keyword=${body.title}&searchFields=title+synonyms` as string, {
+  const data = await fetch(process.env.BACKEND_URL + `/api/anime/search?keyword=${body.title}&searchFields=title+synonyms` as string, {
     // TODO may add cache?
     cache: 'no-cache'
   })

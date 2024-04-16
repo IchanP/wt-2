@@ -10,6 +10,32 @@ export class AnimeController {
   @inject(INVERSE_TYPES.ISearchAnime) private service: ISearchAnime
   #number : number = 0
 
+  async searchAnimeTitle (req: Request, res: Response, next: NextFunction) {
+    try {
+      const title = req.query.keyword as string
+      if (!title) {
+        throw new InvalidQueryError('Title must be provided')
+      }
+
+      // TODO make the below check against the possible allowed fields essentially make an enum of the allowed fields
+      const searchField: string = req.query.searchFields as string
+      if (!searchField) {
+        throw new InvalidQueryError('Search fields must be provided')
+      }
+      const searchFields = searchField.split(' ')
+
+      const data = await this.service.searchAnime(title, searchFields)
+      return res.json({ data })
+    } catch (e: unknown) {
+      let err = e as Error
+      console.error(err.message)
+      if (err instanceof InvalidQueryError) {
+        err = createError(400, err.message)
+      }
+      next(err)
+    }
+  }
+
   async fetchTags (req: Request, res: Response, next: NextFunction) {
     try {
       const tags = await this.service.nameAllTags()
@@ -23,7 +49,7 @@ export class AnimeController {
 
   async fetchTagData (req: Request, res: Response, next: NextFunction) {
     try {
-      // TODO make this a general function where you pass in the query name to retrieve the query value
+      // TODO make the below check a general function where you pass in the query name to retrieve the query value
       const tag = req.query.tagname as string
       if (!tag) {
         throw new InvalidQueryError('Tag name must be provided')

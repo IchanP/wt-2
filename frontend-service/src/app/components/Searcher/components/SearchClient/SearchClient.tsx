@@ -1,7 +1,6 @@
 'use client'
 
-import SearchForm from '@/app/components/SearchForm'
-import { FormEvent } from 'react'
+import SearchForm from '@/app/components/Searcher/components/SearchForm'
 
 /**
  * The search client handles the logic for the search page.
@@ -15,6 +14,7 @@ const SearchClient = () => {
    * @param {FormData} data - TODO
    */
   const handleSubmit = async (data: FormData) => {
+    console.log(data)
     const searchQuery = data.get('inputField')
     const response = await fetch('api/search', {
       method: 'POST',

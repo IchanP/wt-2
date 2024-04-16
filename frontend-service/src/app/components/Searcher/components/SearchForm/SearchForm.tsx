@@ -19,7 +19,7 @@ const SearchForm = ({ handleSubmit, placeHolderText }: SearchFormProps): React.J
   return (
     <div className="flex flex-col justify-between w-full">
         <form action={handleSubmit} className="w-full flex flex-row">
-            <input type="text" name="inputField" placeholder={placeHolderText} className="pl-1 rounded-md w-5/6 h-8 text-black focus:outline-none focus:ring focus:border-blue-700"/>
+            <input type="text" name="inputField" placeholder={placeHolderText} className="bg-gray-100 pl-1 grow rounded-l-md w-5/6 h-8 text-black focus:outline-none" />
             <SubmitButton />
         </form>
     </div>
@@ -33,9 +33,11 @@ const SearchForm = ({ handleSubmit, placeHolderText }: SearchFormProps): React.J
  */
 const SubmitButton = (): React.JSX.Element => {
   const data = useFormStatus()
+  const isLoading = data.pending
   return (
-        <button disabled={data.pending} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/6"></button>
+        <button disabled={isLoading} className="rounded-r-md bg-gray-100 h-8 text-white font-bold py-2 w-1/6 max-w-8 ">&#x1F50E;</button>
   )
 }
 
+// bg-blue-500 h-8 hover:bg-blue-700
 export default SearchForm

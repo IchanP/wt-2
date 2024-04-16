@@ -58,6 +58,7 @@ declare global {
         startSync(): void;
     }
     interface ElasticIAnimeRepo {
+        searchMultiMatch(query: string, fields: Array<string>, nextPageStartPoint: Array<number>, size: number): Promise<IAnime[]>
         getAnimeTags(): Promise<BucketData[]>
         getTagDataByYear(tag: string, yearRange: YearRange): Promise<BucketData[]>
         getTotalAnimeByYear(yearRange: YearRange): Promise<BucketData[]>

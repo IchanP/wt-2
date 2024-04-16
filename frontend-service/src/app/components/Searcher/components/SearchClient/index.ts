@@ -1,2 +1,2 @@
-import SearchClient from './SearchClient.tsx'
+import SearchClient from './SearchClient'
 export default SearchClient

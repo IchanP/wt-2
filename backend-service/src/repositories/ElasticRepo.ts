@@ -1,10 +1,30 @@
-import { SearchResponse } from '@elastic/elasticsearch/lib/api/types.js'
+import { AggregationsAggregate, SearchResponse } from '@elastic/elasticsearch/lib/api/types.js'
 import { INVERSE_TYPES } from 'config/types.ts'
 import { inject, injectable } from 'inversify'
 
 @injectable()
 export class ElasticRepo implements ElasticIAnimeRepo {
  @inject(INVERSE_TYPES.IElasticClient) private service: IElasticClient
+
+ async searchMultiMatch (query: string, fields: Array<string>, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
+   // TODO fields should have to contain the FULL query and not only parts of it...
+   return await this.service.getClient().search<IAnime>({
+     index: 'anime',
+     ...(nextPageStartPoint?.length > 0 ? { search_after: nextPageStartPoint } : {}),
+     sort: [
+       { _score: { order: 'desc' } },
+       { animeId: { order: 'asc' } }
+     ],
+     query: {
+       multi_match: {
+         query,
+         fields,
+         type: 'phrase'
+       }
+     },
+     size
+   })
+ }
 
  async getAnimeTags (): Promise<BucketData[]> {
    const response: SearchResponse<unknown, Record<string, AggregateBuckets>> = await this.service.getClient().search({

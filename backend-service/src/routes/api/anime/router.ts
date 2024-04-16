@@ -18,3 +18,7 @@ router.get('/tags', (req, res, next) => {
 router.get('/count', (req, res, next) => {
   controller.fetchTotalByYear(req, res, next)
 })
+
+router.get('/search', (req, res, next) => {
+  controller.searchAnimeTitle(req, res, next)
+})
