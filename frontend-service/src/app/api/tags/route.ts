@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic'
  */
 export async function GET (): Promise<NextResponse> {
   // TODO error handling
-  const response = await fetch(process.env.BACKEND_URL + '/tags', { cache: 'force-cache' })
+  const response = await fetch(process.env.BACKEND_URL + '/api/anime/tags', { cache: 'force-cache' })
   const data = await response.json()
   return NextResponse.json({ data: data.data })
 }
@@ -27,7 +27,7 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
   const tag = encodeURIComponent(body.tag)
   const tagColor = body.tagColor
   const yearRange = body.range as Span
-  const response = await fetch(process.env.BACKEND_URL + '/tag' + `?tagname=${tag}&earliest=${yearRange.lowest}&latest=${yearRange.highest}`, {
+  const response = await fetch(process.env.BACKEND_URL + '/api/anime/tag' + `?tagname=${tag}&earliest=${yearRange.lowest}&latest=${yearRange.highest}`, {
     method: 'GET'
   })
   const data = await response.json()
