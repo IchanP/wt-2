@@ -9,6 +9,9 @@ interface IAnimeDocument extends IAnime {
         year?: number;
         _id: string
     }
+    createdAt: Date,
+    updatedAt: Date
+    __v: number
 }
 
 interface IChange {
@@ -23,6 +26,7 @@ interface IChange {
 @injectable()
 export class ElasticSync implements DataSync {
     @inject(INVERSE_TYPES.IElasticClient) private esClient: IElasticClient
+    #elasticIndex = 'anime'
 
     startSync () {
       AnimeModel.watch().on('change', async (change) => {
@@ -46,16 +50,22 @@ export class ElasticSync implements DataSync {
       const id = document.documentKey._id.toString()
       const updatedFields = document.updateDescription.updatedFields
       delete updatedFields.updatedAt
-      this.esClient.updateDocument(updatedFields, id, 'anime')
+      this.esClient.updateDocument(updatedFields, id, this.#elasticIndex)
     }
 
     #buildIndex (document: IAnimeDocument) {
-      delete document._id
-      delete document.animeSeason._id
-
+      this.#sanitizeDocument(document)
       return {
-        index: 'anime',
+        index: this.#elasticIndex,
         body: document
       }
+    }
+
+    #sanitizeDocument (document: IAnimeDocument) {
+      delete document._id
+      delete document.animeSeason._id
+      delete document.createdAt
+      delete document.updatedAt
+      delete document.__v
     }
 }

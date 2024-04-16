@@ -17,6 +17,7 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
     cache: 'no-cache'
   })
   const parsedData = await data.json()
+  console.log(parsedData)
   // return NextResponse.json({ data: parsedData.data }) */
   return NextResponse.json({ data: 'xdd' })
 }
