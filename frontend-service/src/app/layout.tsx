@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +24,24 @@ export default function RootLayout ({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+      <body className={inter.className}>
+        <header className="flex items-center justify-between p-4">
+          <div className="flex items-center justify-between gap-5">
+            <Link href="/" className="text-2xl font-bold">Tag Visualization</Link>
+            <Link href="/search" className="text-2xl font-bold">Search Anime</Link>
+          </div>
+        </header>
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
+           <div className="flex flex-col items-center justify-between">
+              <h1 className="text-4xl font-bold">Anime Data Visualization [Name Pending]</h1>
+              <p className="text-2s">Visualization of over 33,000 anime from 1907 to {new Date().getFullYear()}</p>
+              <br />
+              {children}
+            </div>
+          </div>
+        </main>
+      </body>
+  </html>
   )
 }
