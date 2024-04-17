@@ -17,9 +17,9 @@ interface SearchFormProps {
  */
 const SearchForm = ({ handleSubmit, placeHolderText }: SearchFormProps): React.JSX.Element => {
   return (
-    <div className="flex flex-col justify-between w-full">
-        <form action={handleSubmit} className="w-full flex flex-row">
-            <input type="text" name="inputField" placeholder={placeHolderText} className="bg-gray-100 pl-1 grow rounded-l-md w-5/6 h-8 text-black focus:outline-none" />
+    <div className="flex flex-col items-center justify-between w-full">
+        <form action={handleSubmit} className="w-1/2 flex flex-row">
+            <input type="text" name="inputField" placeholder={placeHolderText} className="bg-gray-100 pl-5 grow rounded-l-md w-5/6 h-8 text-black focus:outline-none" />
             <SubmitButton />
         </form>
     </div>

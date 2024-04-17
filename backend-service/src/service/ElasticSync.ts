@@ -7,7 +7,9 @@ interface IAnimeDocument extends IAnime {
     animeSeason: {
         season: string;
         year?: number;
-        _id: string
+        _id: string;
+        createdAt: Date;
+        updatedAt: Date
     }
     createdAt: Date,
     updatedAt: Date
@@ -71,5 +73,7 @@ export class ElasticSync implements DataSync {
       delete document.createdAt
       delete document.updatedAt
       delete document.__v
+      delete document.animeSeason.createdAt
+      delete document.animeSeason.updatedAt
     }
 }

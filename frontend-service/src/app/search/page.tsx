@@ -7,7 +7,7 @@ import SearchClient from '../components/Searcher/components/SearchClient'
  */
 const SearchPage = () => {
   return (
-        <div className="flex flex-col items-center justify-between mt-10">
+        <div className="flex flex-col items-center justify-between mt-10 w-full">
             <h1 className="text-2xl">Search For An Anime Title</h1>
             <br></br>
             <SearchClient />

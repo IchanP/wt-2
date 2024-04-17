@@ -19,7 +19,6 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
     cache: 'no-cache'
   })
   const data = await response.json()
-
   const blackColor = 'rgb(0, 0, 0)'
   const totalTrace = buildTimeChartTrace(data.data, blackColor)
   totalTrace.showlegend = true

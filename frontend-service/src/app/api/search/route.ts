@@ -17,7 +17,14 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
     cache: 'no-cache'
   })
   const parsedData = await data.json()
-  console.log(parsedData)
-  // return NextResponse.json({ data: parsedData.data }) */
-  return NextResponse.json({ data: 'xdd' })
+  const anime = parsedData.data
+  if (!anime || anime.length === 0) {
+    return new NextResponse(JSON.stringify({
+      error: 'Not found',
+      message: 'No results were found with the provided title.'
+    }), {
+      status: 404
+    })
+  }
+  return NextResponse.json({ data: parsedData.data })
 }
