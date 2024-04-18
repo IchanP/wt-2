@@ -12,6 +12,7 @@ type AnimeType = 'TV' | 'MOVIE' | 'OVA' | 'ONA' | 'SPECIAL' | 'UNKNOWNN'
 
 interface IAnime {
     animeId: number;
+    sources: string[];
     title: string;
     type: AnimeType;
     episodes?: number;
@@ -23,6 +24,8 @@ interface IAnime {
     synonyms: string[];
     relatedAnime: string[];
     tags: string[];
+    picture: string;
+    thumbnail: string;
     broadcast?: {
         day: string;
         time: string;

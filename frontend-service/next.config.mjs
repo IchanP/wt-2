@@ -1,15 +1,11 @@
+/* eslint-disable jsdoc/require-jsdoc */
+import { allowedHosts } from './config/allowedhosts.mjs'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /**
-   *
-   * @param defaultPathMap
-   * @param root0
-   * @param root0.dev
-   * @param root0.dir
-   * @param root0.outDir
-   * @param root0.distDir
-   * @param root0.buildId
-   */
+  images: {
+    remotePatterns: allowedHosts
+  },
   exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
@@ -20,10 +16,9 @@ const nextConfig = {
       .reduce((paths, path) => {
         paths[path] = defaultPathMap[path]
         return paths
-      }, {})
-
+      }, { })
     return pathMap
   }
 }
-
+console.log(nextConfig)
 export default nextConfig

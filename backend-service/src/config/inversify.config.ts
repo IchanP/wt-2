@@ -14,4 +14,5 @@ container.bind<IElasticClient>(INVERSE_TYPES.IElasticClient).to(ElasticSearchCli
 container.bind<DataSync>(INVERSE_TYPES.DataSync).to(ElasticSync).inSingletonScope()
 container.bind<ISearchAnime>(INVERSE_TYPES.ISearchAnime).to(AnimeSearchService)
 container.bind<ElasticIAnimeRepo>(INVERSE_TYPES.IElasticRepo).to(ElasticRepo)
+
 export { container }

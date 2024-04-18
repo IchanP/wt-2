@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { isHostAllowed } from '@/app/utils'
+import Image from 'next/image'
+import { SyntheticEvent, useEffect, useState } from 'react'
 
 /**
  * Displays a very simple overview of the contents of an anime.
@@ -9,6 +11,9 @@ import { useEffect, useState } from 'react'
  */
 const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBack: (animeTitle: string) => void }): React.JSX.Element => {
   const [backgroundColor, setBackgroundColor] = useState<string>('bg-gray-400') // Default background color
+  const fallBackImage = 'https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic.png'
+  const [imgSrc, setImgSrc] = useState<string>()
+
   useEffect(() => {
   /**
    * Dynamically sets the background color of the anime block based on the type of anime.
@@ -32,11 +37,39 @@ const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBac
           return 'bg-gray-400'
       }
     }
+
+    /**
+     * Verifies that the application has whitelisted the host.
+     * Sets a default image if the host is not whitelisted.
+     */
+    const verifyHost = () => {
+      if (isHostAllowed(anime.thumbnail, anime.title)) {
+        setImgSrc(anime.thumbnail)
+      } else {
+        setImgSrc(fallBackImage)
+      }
+    }
     setBackgroundColor(decideBackgroundColor(anime.type))
+    verifyHost()
   }, [anime])
 
+  /**
+   * Sets the image source to a fallback image if the image fails to load.
+   */
+  const onImgError = () => {
+    // TODO this may trigger on rate limiting, fix this in the future
+    setImgSrc(fallBackImage)
+  }
+
   return (
-        <div onClick={() => clickCallBack(anime.title)} className={backgroundColor + ' w-64 p-6 pt-3'}>
+        <div onClick={() => clickCallBack(anime.title)} className={backgroundColor + ' w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
+            <Image
+            src={imgSrc as string}
+            width={200}
+            height={400}
+            alt={anime.title + ' key visual.'}
+            onError={onImgError}
+            />
             <div className='h-20 min-w-20'>
                <p className="text-sm whitespace-pre-wrap">{anime.title}</p>
             </div>

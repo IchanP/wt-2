@@ -34,12 +34,15 @@ declare global {
         animeId: number;
         title: string;
         type: string;
+        sources: string[];
         episodes?: number;
         status: string;
         animeSeason: {
             season: string;
             year?: number;
         };
+        picture: string;
+        thumbnail: string;
         synonyms: string[];
         relatedAnime: string[];
         tags: string[];

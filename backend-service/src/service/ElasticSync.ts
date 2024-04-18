@@ -41,6 +41,8 @@ export class ElasticSync implements DataSync {
         await this.#updateAnimeDocument(change)
       } else if (change.operationType === 'delete') {
         await this.#deleteAnimeDocument(change.documentKey)
+      } else if (change.operationType === 'drop') {
+        // TODO implement
       }
     })
   }

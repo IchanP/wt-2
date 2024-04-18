@@ -3,6 +3,7 @@
 import LazyLoad from '@/app/components/LazyLoad'
 import SearchForm from '@/app/components/Searcher/components/SearchForm'
 import SimpleAnimeBlock from '@/app/components/SimpleAnimeBlock'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 /**
@@ -13,6 +14,7 @@ import { useState } from 'react'
 const SearchClient = () => {
   const [notFound, setNotFound] = useState(false)
   const [foundAnime, setFoundAnime] = useState<IAnime[]>([])
+  const router = useRouter()
   /**
    * Handles the form submission by calling API route to fetch data.
    *
@@ -41,8 +43,7 @@ const SearchClient = () => {
    * @param {string} titleOfAnime - The title of the anime to route to.
    */
   const routeToAnimePage = (titleOfAnime: string) => {
-    console.log(titleOfAnime)
-    // TODO route to anime page
+    router.push('/anime/' + titleOfAnime)
   }
 
   return (
@@ -57,6 +58,7 @@ const SearchClient = () => {
               <>
               <LazyLoad key={anime.animeId} >
                   <SimpleAnimeBlock
+                  key={anime.animeId}
                   anime={anime}
                   clickCallBack={routeToAnimePage}
                   />
