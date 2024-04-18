@@ -20,5 +20,4 @@ const nextConfig = {
     return pathMap
   }
 }
-console.log(nextConfig)
 export default nextConfig

@@ -31,7 +31,7 @@ export default function RootLayout ({
             <Link href="/search" className="text-2xl font-bold">Search Anime</Link>
           </div>
         </header>
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main className="flex min-h-screen flex-col items-center justify-between p-24 pt-2">
           <div className="z-10 w-full items-center justify-between font-mono text-sm">
            <div className="flex flex-col w-full items-center justify-between">
               <h1 className="text-4xl font-bold">Anime Data Visualization [Name Pending]</h1>

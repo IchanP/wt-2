@@ -1,7 +1,7 @@
 'use server'
 /**
  * A simple error component handler which displays a 404 if something goes wrong.
- *1
+ *
  * @returns {React.JSX.Element} The error component.
  */
 const ErrorComponentHandler = async (): Promise<React.JSX.Element> => {

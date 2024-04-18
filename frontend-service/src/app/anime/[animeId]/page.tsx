@@ -1,10 +1,7 @@
-import ErrorComponentHandler from '@/app/components/ErrorComponentHandler'
+import IndividualAnimeClient from '@/app/components/IndividualAnime/IndividualAnimeClient'
 import { fetchAndThrow } from '@/app/utils'
-import { FailFetchError } from '@/app/utils/Errors/FailFetchError'
 import { NoValidSourcesError } from '@/app/utils/Errors/NoValidSourcesError'
 import { fetchAnimeExternally } from '@/app/utils/externalApiFetchers'
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
-import { useRouter } from 'next/navigation'
 
 interface URLParam {
     animeId: string;
@@ -21,10 +18,10 @@ const AnimePage = async ({ params }: {params: URLParam}): Promise<React.JSX.Elem
   const id = decodeURIComponent(params.animeId)
   /**
    * Fetches anime data from external APIs and the internal database.
-   * 
-   * @returns {Promise<CombinedIAnimeData | IAnime>} - The anime data. If the external API fails, only the internal data is returned.
+   *
+   * @returns {Promise<CombinedIAnimeData>} - The anime data. If the external API fails, only the internal data is returned.
    */
-  const fetchAnimeData = async (): Promise<CombinedIAnimeData | IAnime> => {
+  const fetchAnimeData = async (): Promise<CombinedIAnimeData > => {
     let animeInfo: IAnime | undefined
     try {
       const data = await fetchAndThrow(`${process.env.OWN_BASE_URL}/api/anime/${id}`)
@@ -33,16 +30,17 @@ const AnimePage = async ({ params }: {params: URLParam}): Promise<React.JSX.Elem
       return { anime: animeInfo, externalData: externalAnimeData }
     } catch (e: unknown) {
       if (e instanceof NoValidSourcesError && animeInfo) {
-        return animeInfo as IAnime
+        return { anime: animeInfo, externalData: null }
       }
       throw new Error('Something went wrong while fetching this anime...')
     }
   }
   const animeData = await fetchAnimeData()
   return (
-
        <>
-        <h1>{id}</h1>
+        <IndividualAnimeClient
+        animeData={animeData}
+        />
       </>
   )
 }

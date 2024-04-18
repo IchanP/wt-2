@@ -1,4 +1,4 @@
-import { generateRandomColor } from '@/app/utils'
+import { buildMappedTags } from '@/app/utils'
 import TimeChartClient from '../TimeChartClient/TimeChartClient'
 import { yearRange } from '../constants'
 import { PlotData } from 'plotly.js'
@@ -18,8 +18,9 @@ const TimeChartFetcher = async (): Promise<React.JSX.Element> => {
       cache: 'no-cache'
     })
     const data = await response.json()
-    const coloredTags: MappedTag[] = data.data.map((tag: string) => ({ tag, color: generateRandomColor() }))
-    return coloredTags.sort((a, b) => a.tag.localeCompare(b.tag))
+    const coloredTags: MappedTag[] = buildMappedTags(data.data)
+    console.log(coloredTags)
+    return coloredTags.sort((a, b) => a.name.localeCompare(b.name))
   }
 
   /**

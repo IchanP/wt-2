@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import OptionTags from '../OptionTags/OptionTags'
-import TimeChart from '../TimeChart/TimeChart'
+import OptionTags from '../OptionTags'
+import TimeChart from '../TimeChart'
 import { PlotData } from 'plotly.js'
 import { yearRange } from '../constants'
 
@@ -25,7 +25,7 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
   const setSelectedTag = async (tag: MappedTag) => {
     const response = await fetch('api/anime/tags', {
       method: 'POST',
-      body: JSON.stringify({ tag: tag.tag, range: yearRange, tagColor: tag.color })
+      body: JSON.stringify({ tag: tag.name, range: yearRange, tagColor: tag.color })
     })
     if (!response.ok) {
       // TODO handle this
@@ -42,8 +42,8 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
    * @param {MappedTag} tag - The tag that will be removed from the graph.
    */
   const removeSelectedTag = (tag: MappedTag) => {
-    setExcluded(excluded.filter((excludedTag) => excludedTag.tag !== tag.tag))
-    setData(data.filter((trace) => trace.name !== tag.tag))
+    setExcluded(excluded.filter((excludedTag) => excludedTag.name !== tag.name))
+    setData(data.filter((trace) => trace.name !== tag.name))
   }
 
   return (

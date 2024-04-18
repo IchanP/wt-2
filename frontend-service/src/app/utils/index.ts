@@ -58,3 +58,13 @@ export async function fetchAndThrow (url: string) {
   }
   return response.json()
 }
+
+/**
+ * Creates an array of MappedTags from an array of strings.
+ *
+ * @param {string[]} data - The array of strings to be converted to MappedTags.
+ * @returns {MappedTag[]} - The created array of MappedTags.
+ */
+export function buildMappedTags (data: Array<string>): Array<MappedTag> {
+  return data.map((tag: string) => ({ name: tag, color: generateRandomColor() }))
+}

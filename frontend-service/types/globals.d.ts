@@ -7,7 +7,7 @@ type TagOptions = {
 type BucketData = { key: string, doc_count: number }
 type TagData = { tag: string, data: BucketData[] }
 type Span = { lowest: number, highest: number}
-type MappedTag = { tag: string, color: string }
+type MappedTag = { name: string, color: string }
 type AnimeType = 'TV' | 'MOVIE' | 'OVA' | 'ONA' | 'SPECIAL' | 'UNKNOWNN'
 
 interface IAnime {
@@ -49,4 +49,9 @@ interface ExternalAnime {
     synopsis: string;
     studios: Studio[];
     duration: string;
+}
+
+interface CombinedIAnimeData {
+    anime: IAnime;
+    externalData: ExternalAnime | null;
 }
