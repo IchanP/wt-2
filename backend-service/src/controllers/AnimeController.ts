@@ -6,11 +6,22 @@ import { InvalidQueryError } from 'utils/Errors/InvalidQueryError.ts'
 import createError from 'http-errors'
 import { NotFoundError } from 'utils/Errors/NotFoundError.ts'
 
+/**
+ * Controller that handles requests related to fetching resources related to anime.
+ */
 @injectable()
 export class AnimeController {
   @inject(INVERSE_TYPES.ISearchAnime) private service: ISearchAnime
   #number : number = 0
 
+  /**
+   * Verifies that the passed paramaters are valid and then searches for anime based on the title.
+   *
+   * @param {Request} req - The request object, should have a query of the type keyword and searchFields.
+   * @param {Response} res - The response returned to the caller.
+   * @param {NextFunction} next - The next function to call if an error occurs.
+   * @returns {Promise<Response>} The response containing the data.
+   */
   async searchAnimeTitle (req: Request, res: Response, next: NextFunction) {
     try {
       const title = req.query.keyword as string
@@ -37,6 +48,14 @@ export class AnimeController {
     }
   }
 
+  /**
+   * Fetches all the tags in the database.
+   *
+   * @param {Request} req - The request object.
+   * @param {Response} res - The response returned to the caller.
+   * @param {NextFunction} next - The next function to call if an error occurs.
+   * @returns {Promise<Response>} The response containing the data.
+   */
   async fetchTags (req: Request, res: Response, next: NextFunction) {
     try {
       const tags = await this.service.nameAllTags()
@@ -48,6 +67,14 @@ export class AnimeController {
     }
   }
 
+  /**
+   * Fetches aggregated data for a specific tag.
+   *
+   * @param {Request} req - The request object, should have a query of the type tagname.
+   * @param {Response} res - The response returned to the caller.
+   * @param {NextFunction} next - The next function to call if an error occurs.
+   * @returns {Promise<Response>} The response containing the data
+   */
   async fetchTagData (req: Request, res: Response, next: NextFunction) {
     try {
       // TODO make the below check a general function where you pass in the query name to retrieve the query value
@@ -69,6 +96,14 @@ export class AnimeController {
     }
   }
 
+  /**
+   * Fetches the number of anime produced per year within the specified range provided in the query.
+   *
+   * @param {Request} req - The request object, should have a query of the type earliest and latest in the format of YYYY.
+   * @param {Response} res - The response returned to the caller.
+   * @param {NextFunction} next - The next function to call if an error occurs.
+   * @returns {Promise<Response>} The response containing the data
+   */
   async fetchTotalByYear (req: Request, res:Response, next: NextFunction) {
     try {
       const { earliest, latest } = this.#parseEarleistAndLatest(req)
@@ -84,6 +119,14 @@ export class AnimeController {
     }
   }
 
+  /**
+   * Fetches a singular anime by the id provided in the param.
+   *
+   * @param {Request} req - The request object.
+   * @param {Response} res - The response returned to the caller.
+   * @param {NextFunction} next - The next function to call if an error occurs.
+   * @returns {Promise<Response>} The response containing the data
+   */
   async fetchAnimeById (req: Request, res: Response, next: NextFunction) {
     try {
       const id = Number(req.params.id)
@@ -104,6 +147,12 @@ export class AnimeController {
     }
   }
 
+  /**
+   * Verifies that the passed paramaters are valid numbers. Throws an error if they are not.
+   *
+   * @param {Request} req - The request object containing the paramaters.
+   * @returns {{earliest: number, latest: number}} The parsed paramaters.
+   */
   #parseEarleistAndLatest (req: Request) {
     const earliest = parseInt(req.query.earliest as string)
     const latest = parseInt(req.query.latest as string)

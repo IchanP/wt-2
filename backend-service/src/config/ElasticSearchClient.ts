@@ -67,7 +67,7 @@ export class ElasticSearchClient implements IElasticClient {
 
   /**
    * Returns the elasticsearch client.
-   * 
+   *
    * @returns {Client} The elasticsearch client.
    */
   getClient () {
@@ -79,7 +79,7 @@ export class ElasticSearchClient implements IElasticClient {
 
   /**
    * Indexes a document in elasticsearch.
-   * 
+   *
    * @param {ElasticIndex} document - The document to be indexed.
    * @param {string} id - The unique identifier of the document.
    */
@@ -92,10 +92,11 @@ export class ElasticSearchClient implements IElasticClient {
   }
 
   /**
+   * Updates a document in the provided index.
    *
-   * @param updatedFields
-   * @param id
-   * @param index
+   * @param {UnknowableObject} updatedFields - The fields on the document to be updated.
+   * @param {string} id - The id of the document, used for identifying the document.
+   * @param {string} index - The index where the document is located.
    */
   updateDocument (updatedFields: UnknowableObject, id: string, index: string) {
     this.client.update({
@@ -111,9 +112,10 @@ export class ElasticSearchClient implements IElasticClient {
   }
 
   /**
+   * Deletes a document from the provided index.
    *
-   * @param id
-   * @param index
+   * @param {string} id - The id of the document to be deleted, used for identifying the document.
+   * @param {string} index - The index where the document is located.
    */
   deleteDocument (id: string, index: string) {
     this.client.delete({
@@ -128,7 +130,7 @@ export class ElasticSearchClient implements IElasticClient {
 
   // TODO: handle error
   /**
-   *
+   * Checks that the connection to the elasticsearch client was successful.
    */
   async #checkConnection () {
     try {

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { AnimeModel } from './src/models/Anime.ts'
 import fs from 'fs'
 import { connectDB } from './src/config/mongoose.ts'
@@ -25,6 +27,9 @@ await connectDB(process.env.MONGO_CONNECTION_STRING as string)
 await populate()
 // await deleteIndex()
 
+/**
+ * Populates the MongoDB database with the anime data.
+ */
 async function populate () {
   const file = fs.readFileSync('../anime-offline-database-minified.json', 'utf-8')
   const animes = await JSON.parse(file)
@@ -42,6 +47,9 @@ async function populate () {
     i++
   }
 }
+/**
+ * Deletes the index from the elasticsearch database.
+ */
 async function deleteIndex (): Promise<void> {
   await client.indices.delete({ index: 'anime_new' }).catch(err => { console.error('err', err.message) })
 }

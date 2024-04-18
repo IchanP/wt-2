@@ -8,7 +8,7 @@ interface RoundedRowDivProps {
   isExpandable?: boolean;
 }
 /**
- * A rounded div which will list all of its children in a neat row, with one child per row.
+ * A rounded row div component that can be expanded to show more content.
  *
  * @param {React.PropsWithChildren} root0 - The default react props object.
  * @param {React.ReactNode} root0.children - The children to be displayed in the row.
