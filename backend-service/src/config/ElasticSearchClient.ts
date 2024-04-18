@@ -9,14 +9,23 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+/**
+ * A class that handles general elasticsearch operations such as creating, updating, and deleting documents.
+ */
 @injectable()
 export class ElasticSearchClient implements IElasticClient {
   client: Client
+  /**
+   * Constructor that initializes the elasticsearch client.
+   */
   constructor () {
     this.connectElastic()
     this.#checkConnection()
   }
 
+  /**
+   * Connects to the elasticsearch client.
+   */
   connectElastic () {
     if (!this.client) {
       this.client = new Client({
@@ -33,6 +42,13 @@ export class ElasticSearchClient implements IElasticClient {
     }
   }
 
+  /**
+   * Ensures that the index configuration is set up correctly.
+   * If the index does not exist, it will be created.
+   *
+   * @param {string} indexName - The name of the index to be created.
+   * @param {IndicesCreateRequest} indexOptions - The options for the index creation.
+   */
   async ensureIndexConfiguration (indexName: string, indexOptions: IndicesCreateRequest): Promise<void> {
     try {
       const exists = await this.client.indices.exists({ index: indexName })
@@ -49,6 +65,11 @@ export class ElasticSearchClient implements IElasticClient {
     }
   }
 
+  /**
+   * Returns the elasticsearch client.
+   * 
+   * @returns {Client} The elasticsearch client.
+   */
   getClient () {
     if (!this.client) {
       throw new Error('Elasticsearch client has not been initialized. Please call connectElastic first.')
@@ -56,6 +77,12 @@ export class ElasticSearchClient implements IElasticClient {
     return this.client
   }
 
+  /**
+   * Indexes a document in elasticsearch.
+   * 
+   * @param {ElasticIndex} document - The document to be indexed.
+   * @param {string} id - The unique identifier of the document.
+   */
   indexDocument (document: ElasticIndex, id: string) {
     this.client.create({
       id,
@@ -64,6 +91,12 @@ export class ElasticSearchClient implements IElasticClient {
     }).catch((error) => { console.error('err', error.message) })
   }
 
+  /**
+   *
+   * @param updatedFields
+   * @param id
+   * @param index
+   */
   updateDocument (updatedFields: UnknowableObject, id: string, index: string) {
     this.client.update({
       id,
@@ -77,6 +110,11 @@ export class ElasticSearchClient implements IElasticClient {
     })
   }
 
+  /**
+   *
+   * @param id
+   * @param index
+   */
   deleteDocument (id: string, index: string) {
     this.client.delete({
       id,
@@ -89,6 +127,9 @@ export class ElasticSearchClient implements IElasticClient {
   }
 
   // TODO: handle error
+  /**
+   *
+   */
   async #checkConnection () {
     try {
       const response = await this.client.cluster.health({})

@@ -34,3 +34,19 @@ interface IAnime {
     };
 }
 
+type Studio = {
+    name: string;
+    url: string | undefined;
+}
+
+interface KitsuAnimeData {
+    attributes: {
+        synopsis: string;
+    }
+}
+
+interface ExternalAnime {
+    synopsis: string;
+    studios: Studio[];
+    duration: string;
+}

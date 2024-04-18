@@ -58,6 +58,7 @@ declare global {
         nameAllTags(): Promise<string[]>
         countTagByYear(tag: string, yearRange: YearRange): Promise<TagData>
         countAnime(yearRange: YearRange): Promise<TagData>
+        getAnimeById(id: number): Promise<IAnime>
     }
     interface DataSync {
         startSync(): void;
@@ -67,5 +68,6 @@ declare global {
         getAnimeTags(): Promise<BucketData[]>
         getTagDataByYear(tag: string, yearRange: YearRange): Promise<BucketData[]>
         getTotalAnimeByYear(yearRange: YearRange): Promise<BucketData[]>
+        getOneByAnimeId(id: number): Promise<IAnime>
     }
 }

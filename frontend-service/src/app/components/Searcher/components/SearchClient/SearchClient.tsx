@@ -22,7 +22,7 @@ const SearchClient = () => {
    */
   const handleSubmit = async (data: FormData) => {
     const searchQuery = data.get('inputField')
-    const response = await fetch('api/search', {
+    const response = await fetch('api/anime/search', {
       method: 'POST',
       cache: 'no-cache',
       body: JSON.stringify({ title: searchQuery })
@@ -42,7 +42,7 @@ const SearchClient = () => {
    *
    * @param {string} titleOfAnime - The title of the anime to route to.
    */
-  const routeToAnimePage = (titleOfAnime: string) => {
+  const routeToAnimePage = (titleOfAnime: number) => {
     router.push('/anime/' + titleOfAnime)
   }
 

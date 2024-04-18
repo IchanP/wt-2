@@ -1,6 +1,6 @@
 import { isHostAllowed } from '@/app/utils'
 import Image from 'next/image'
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * Displays a very simple overview of the contents of an anime.
@@ -9,8 +9,8 @@ import { SyntheticEvent, useEffect, useState } from 'react'
  * @param {IAnime} root0.anime - The anime title to be displayed.
  * @returns {React.JSX.Element} The simple anime block component.
  */
-const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBack: (animeTitle: string) => void }): React.JSX.Element => {
-  const [backgroundColor, setBackgroundColor] = useState<string>('bg-gray-400') // Default background color
+const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBack: (animeId: number) => void }): React.JSX.Element => {
+  const [backgroundColor, setBackgroundColor] = useState<string>('bg-gray-400') 
   const fallBackImage = 'https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic.png'
   const [imgSrc, setImgSrc] = useState<string>()
 
@@ -43,7 +43,7 @@ const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBac
      * Sets a default image if the host is not whitelisted.
      */
     const verifyHost = () => {
-      if (isHostAllowed(anime.picture, anime.title)) {
+      if (isHostAllowed(anime.picture)) {
         setImgSrc(anime.picture)
       } else {
         setImgSrc(fallBackImage)
@@ -62,7 +62,7 @@ const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBac
   }
 
   return (
-        <div onClick={() => clickCallBack(anime.title)} className={backgroundColor + ' w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
+        <div onClick={() => clickCallBack(anime.animeId)} className={backgroundColor + ' w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
             <Image
             src={imgSrc as string}
             width={225}

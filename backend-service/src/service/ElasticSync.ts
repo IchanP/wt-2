@@ -1,4 +1,3 @@
-import { IndicesCreateRequest } from '@elastic/elasticsearch/lib/api/types.js'
 import { INVERSE_TYPES } from 'config/types.ts'
 import { inject, injectable } from 'inversify'
 import { AnimeModel } from 'models/Anime.ts'

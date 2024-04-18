@@ -1,5 +1,6 @@
 import { INVERSE_TYPES } from 'config/types.ts'
 import { inject, injectable } from 'inversify'
+import { NotFoundError } from 'utils/Errors/NotFoundError.ts'
 
 /**
  *
@@ -58,5 +59,13 @@ export class AnimeSearchService implements ISearchAnime {
   async countAnime (yearRange: YearRange): Promise<TagData> {
     const total = await this.repo.getTotalAnimeByYear(yearRange)
     return { tag: 'Total', data: total }
+  }
+
+  async getAnimeById (id: number): Promise<IAnime> {
+    const anime = await this.repo.getOneByAnimeId(id)
+    if (!anime) {
+      throw new NotFoundError('Could not find an anime by that title')
+    }
+    return anime
   }
 }

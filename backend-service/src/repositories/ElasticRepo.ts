@@ -93,4 +93,16 @@ export class ElasticRepo implements ElasticIAnimeRepo {
    })
    return response.aggregations.years.buckets
  }
+
+ async getOneByAnimeId (id: number): Promise<IAnime> {
+   const response = await this.service.getClient().search<IAnime>({
+     index: 'anime',
+     query: {
+       match: {
+         animeId: id
+       }
+     }
+   })
+   return response?.hits?.hits[0]?._source
+ }
 }

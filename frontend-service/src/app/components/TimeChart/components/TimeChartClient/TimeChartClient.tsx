@@ -23,7 +23,7 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
    * @param {MappedTag} tag - The tag that will be fetched and displayed.
    */
   const setSelectedTag = async (tag: MappedTag) => {
-    const response = await fetch('api/tags', {
+    const response = await fetch('api/anime/tags', {
       method: 'POST',
       body: JSON.stringify({ tag: tag.tag, range: yearRange, tagColor: tag.color })
     })

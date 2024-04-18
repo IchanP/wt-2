@@ -14,7 +14,7 @@ const TimeChartFetcher = async (): Promise<React.JSX.Element> => {
    * @returns  {Promise<Array<string>>} - Returns the tags in an array of strings.
    */
   const fetchTags = async (): Promise<Array<MappedTag>> => {
-    const response = await fetch(`${process.env.OWN_BASE_URL}/api/tags`, {
+    const response = await fetch(`${process.env.OWN_BASE_URL}/api/anime/tags`, {
       cache: 'no-cache'
     })
     const data = await response.json()
@@ -28,7 +28,7 @@ const TimeChartFetcher = async (): Promise<React.JSX.Element> => {
    * @returns {Promise<MappedTag>} - Returns the total amount of anime as a trace.
    */
   const fetchTotal = async (): Promise<Partial<PlotData>> => {
-    const response = await fetch(`${process.env.OWN_BASE_URL}/api/total`, {
+    const response = await fetch(`${process.env.OWN_BASE_URL}/api/anime/total`, {
       method: 'POST',
       cache: 'no-cache',
       body: JSON.stringify({ range: yearRange })

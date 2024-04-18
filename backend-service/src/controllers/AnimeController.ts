@@ -4,6 +4,7 @@ import 'dotenv/config'
 import { INVERSE_TYPES } from 'config/types.ts'
 import { InvalidQueryError } from 'utils/Errors/InvalidQueryError.ts'
 import createError from 'http-errors'
+import { NotFoundError } from 'utils/Errors/NotFoundError.ts'
 
 @injectable()
 export class AnimeController {
@@ -78,6 +79,26 @@ export class AnimeController {
       console.error(err.message)
       if (err instanceof InvalidQueryError) {
         err = createError(400, err.message)
+      }
+      next(err)
+    }
+  }
+
+  async fetchAnimeById (req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = Number(req.params.id)
+      if (!id || isNaN(id)) {
+        throw new InvalidQueryError('Id must be provided and be a number')
+      }
+      const data = await this.service.getAnimeById(id)
+      return res.json({ data })
+    } catch (e: unknown) {
+      let err = e as Error
+      console.error(err.message)
+      if (err instanceof InvalidQueryError) {
+        err = createError(400, err.message)
+      } else if (err instanceof NotFoundError) {
+        err = createError(404, err.message)
       }
       next(err)
     }
