@@ -1,6 +1,5 @@
-import { convertMinutesToHoursAndMinutes } from '.'
+import { convertMinutesToHoursAndMinutes, fetchAndThrow } from './index'
 import { NoValidSourcesError } from './Errors/NoValidSourcesError'
-
 interface ProductionHateoasLinks {
     attributes: {
         role: string
@@ -23,13 +22,15 @@ interface ProductionHateoasLinks {
  */
 export async function fetchAnimeExternally (options: string[]) {
   try {
-    if (options.some((option) => option.includes('xxx'))) {
+    let fetchedExternalAnime
+    if (options.some((option) => option.includes('myanimelist'))) {
       const malUrl = options.find((option) => option.includes('myanimelist')) as string
-      return fetchFromJikan(malUrl)
+      fetchedExternalAnime = fetchFromJikan(malUrl)
     } else if (options.some((option) => option.includes('kitsu'))) {
       const kitsuUrl = options.find((option) => option.includes('kitsu')) as string
-      return fetchFromKitsu(kitsuUrl)
+      fetchedExternalAnime = fetchFromKitsu(kitsuUrl)
     }
+    return fetchedExternalAnime
   } catch (e: unknown) {
     const err = new NoValidSourcesError('This anime is not available from MAL or Kitsu')
     throw err
@@ -79,29 +80,11 @@ async function fetchFromKitsu (source: string): Promise<ExternalAnime> {
  * @returns {ExternalAnime} The converted anime data.
  */
 function createExternalAnime (externalAnime: ExternalAnime): ExternalAnime {
-  console.log(externalAnime.studios)
   return {
     synopsis: externalAnime.synopsis,
     studios: externalAnime.studios,
     duration: externalAnime.duration
   }
-}
-
-/**
- * Fetches data externally and throws an error if the response is not ok.
- *
- * @param {string} url - The URL from where the data will be fetched.
- * @returns {Promise<JSON>} The fetched JSON data.
- */
-async function fetchAndThrow (url: string) {
-  const response = await fetch(url, {
-    // TODO change this to cache
-    cache: 'no-cache'
-  })
-  if (!response.ok) {
-    throw new Error('Failed to fetch anime data')
-  }
-  return response.json()
 }
 
 /**

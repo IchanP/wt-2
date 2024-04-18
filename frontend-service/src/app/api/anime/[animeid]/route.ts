@@ -1,3 +1,4 @@
+import { FailFetchError } from '@/app/utils/Errors/FailFetchError'
 import { NextRequest, NextResponse } from 'next/server'
 interface AnimeIdParams {
   params: {
@@ -20,7 +21,7 @@ export async function GET (request: NextRequest, { params }: AnimeIdParams): Pro
     cache: 'no-cache'
   })
   if (!response.ok) {
-    // TODO throw error
+    throw new FailFetchError('Failed to fetch from backend.')
   }
   const data = await response.json()
   return NextResponse.json({ data: data.data })
