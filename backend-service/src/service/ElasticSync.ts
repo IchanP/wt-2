@@ -92,14 +92,14 @@ export class ElasticSync implements DataSync {
             analyzer: {
               title_analyzer: {
                 type: 'custom',
-                tokenizer: 'my_custom_ngram_tokenizer',
+                tokenizer: 'title_synoynms_tokenizer',
                 filter: ['lowercase']
               }
             },
             tokenizer: {
-              my_custom_ngram_tokenizer: { // This is the correct placement and naming
-                type: 'ngram',
-                min_gram: 2,
+              title_synoynms_tokenizer: {
+                type: 'edge_ngram',
+                min_gram: 3,
                 max_gram: 20,
                 token_chars: ['letter', 'digit']
               }
@@ -109,6 +109,10 @@ export class ElasticSync implements DataSync {
         mappings: {
           properties: {
             title: {
+              type: 'text',
+              analyzer: 'title_analyzer'
+            },
+            synonyms: {
               type: 'text',
               analyzer: 'title_analyzer'
             }

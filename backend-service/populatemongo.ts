@@ -42,8 +42,8 @@ async function populate () {
     i++
   }
 }
-function deleteIndex (): void {
-  client.indices.delete({ index: 'anime' }).catch(err => { console.error('err', err.message) })
+async function deleteIndex (): Promise<void> {
+  await client.indices.delete({ index: 'anime_new' }).catch(err => { console.error('err', err.message) })
 }
 
 client.count({ index: 'anime' }).then((res) => {

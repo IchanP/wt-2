@@ -11,11 +11,7 @@
       "@lnu"
     ],
     "rules": {
-      "no-undef": "off",
-      "jsdoc/require-jsdoc": "off",
-      "jsdoc": "off",
-      "jsdoc/check-tag-names": "off",
-      "jsdoc/check-indentation": "off"
+      "no-undef": "off"
 
     },
     "ignorePatterns":["node_modules"]

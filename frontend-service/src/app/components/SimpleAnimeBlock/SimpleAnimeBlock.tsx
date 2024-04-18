@@ -43,8 +43,8 @@ const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBac
      * Sets a default image if the host is not whitelisted.
      */
     const verifyHost = () => {
-      if (isHostAllowed(anime.thumbnail, anime.title)) {
-        setImgSrc(anime.thumbnail)
+      if (isHostAllowed(anime.picture, anime.title)) {
+        setImgSrc(anime.picture)
       } else {
         setImgSrc(fallBackImage)
       }
@@ -65,8 +65,8 @@ const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBac
         <div onClick={() => clickCallBack(anime.title)} className={backgroundColor + ' w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
             <Image
             src={imgSrc as string}
-            width={200}
-            height={400}
+            width={225}
+            height={332}
             alt={anime.title + ' key visual.'}
             onError={onImgError}
             />

@@ -1,32 +1,3 @@
-import { allowedHosts } from '../../../config/allowedhosts.mjs'
-/**
- * Generates a random color for the buttons.
- *
- * @returns {string} The random color as a RGB string.
- */
-export function generateRandomColor () {
-  const r = Math.floor(Math.random() * 256)
-  const g = Math.floor(Math.random() * 256)
-  const b = Math.floor(Math.random() * 256)
-  return `rgb(${r},${g},${b})`
-}
-
-/**
- * Checks if the host is allowed to access the service.
- *
- * @param {string} host - The host to check if it is allowed.
- * @returns {boolean} - Returns true if the host is allowed, false otherwise.
- */
-export function isHostAllowed (host: string): boolean {
-  const hostName = new URL(host).hostname
-  for (const hosts of allowedHosts) {
-    if (hostName === hosts.hostname) {
-      return true
-    }
-  }
-  return false
-}
-
 /**
  * Sorts the anime by keyword. If the title of the anime starts with the keyword it will be sorted first.
  * If the first word only starts with the keyword it will be sorted second.

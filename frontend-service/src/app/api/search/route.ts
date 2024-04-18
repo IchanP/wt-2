@@ -1,3 +1,4 @@
+import { sortAnimeByKeyword } from '@/app/utils/sortanime'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
@@ -11,8 +12,9 @@ export const dynamic = 'force-dynamic'
 export async function POST (req: NextRequest): Promise<NextResponse> {
   // TODO error handling
   const body = await req.json()
+  const title = body.title
   // TODO maybe make it more general purpose so require that the searchFields are passed in the body
-  const data = await fetch(process.env.BACKEND_URL + `/api/anime/search?keyword=${body.title}&searchFields=title+synonyms` as string, {
+  const data = await fetch(process.env.BACKEND_URL + `/api/anime/search?keyword=${title}&searchFields=title+synonyms` as string, {
     // TODO may add cache?
     cache: 'no-cache'
   })
@@ -26,5 +28,6 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
       status: 404
     })
   }
-  return NextResponse.json({ data: parsedData.data })
+  const sortedAnime = sortAnimeByKeyword(title, parsedData.data)
+  return NextResponse.json({ data: sortedAnime })
 }
