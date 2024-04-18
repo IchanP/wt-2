@@ -9,13 +9,20 @@ import { inject, injectable } from 'inversify'
 export class ElasticRepo implements ElasticIAnimeRepo {
  @inject(INVERSE_TYPES.IElasticClient) private service: IElasticClient
  #index = 'anime'
- // TODO this JSDOC
  /**
+  * Searches for anime by matching the provided query to the fields provided.
+  * A general search function that can be used for any field.
+  * It will only match the query string to the beginning of a string in the field.
+  * Sorts the results by score in descending oreder and then by animeId in ascending order.
   *
-  * @param query
-  * @param fields
-  * @param nextPageStartPoint
-  * @param size
+  * @example
+  * // returns ["Oshi no Ko", "Oshin"] but does NOT return ["Moshidora"]
+  * searchAnime('Oshi', ['title']) will
+  * @param {string} query - The phrase or query to search for.
+  * @param {string[]} fields - The name of the fields to search for the query in.
+  * @param {Array<number>} nextPageStartPoint - The starting point for the next page of results, gathered from the sort field of the last result. If not provided, the first page is returned.
+  * @param {number} size - The size of the page. The maximum number of results to return for each call.
+  * @returns {Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>} The search response containing the anime documents that match the query and further metadata for requesting the next page.
   */
  async searchMultiMatch (query: string, fields: Array<string>, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
    return await this.service.getClient().search<IAnime>({

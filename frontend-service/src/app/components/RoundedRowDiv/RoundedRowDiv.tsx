@@ -1,6 +1,5 @@
 'use client'
-import { max } from 'd3'
-import { createRef, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface RoundedRowDivProps {
   children: React.ReactNode;
@@ -18,7 +17,6 @@ const RoundedRowDiv = ({ children, maxHeight, isExpandable = false }: RoundedRow
   const ref = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
   const [changeableMaxHeight, setMaxHeight] = useState(maxHeight || '')
-  // TODO add button to show less...?
 
   /**
    * Resizes the div to show all of its children.
@@ -45,10 +43,10 @@ const RoundedRowDiv = ({ children, maxHeight, isExpandable = false }: RoundedRow
         setIsOverflowing(isOverflow)
       }
     }
-
     checkOverflow()
-    window.addEventListener('resize', checkOverflow)
 
+    // Clean up event listener when the component is removed from the DOM
+    window.addEventListener('resize', checkOverflow)
     return () => window.removeEventListener('resize', checkOverflow)
   }, [children])
 

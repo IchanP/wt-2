@@ -29,8 +29,8 @@ export class AnimeSearchService implements ISearchAnime {
       const response = await this.repo.searchMultiMatch(query, fields, nextPageStartPoint, pageSize)
       const results = response.hits.hits.map(hit => hit._source)
       allHits = allHits.concat(results)
-
       if (results.length < pageSize) {
+        console.log(response.hits.hits[results.length - 1])
         moreResultsAvailable = false
       } else {
         nextPageStartPoint = response.hits.hits[results.length - 1].sort

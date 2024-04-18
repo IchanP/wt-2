@@ -19,16 +19,15 @@ const SideBarTags = ({ colorTags }: {colorTags: MappedTag[]}) => {
   const clickCallback = async (tag: MappedTag) => {
     console.log('Tag clicked')
   }
-  // TODO make a limit for the number of tags to display
   return (
         <>
-        {colorTags.map((tag) => (
-                    <ColoredTag
-                        key={tag.name}
-                        tag={tag}
-                        onClickCallback={clickCallback}
-                    />
-        ))}
+          {colorTags.map((tag) => (
+            <ColoredTag
+                key={tag.name}
+                tag={tag}
+                onClickCallback={clickCallback}
+            />
+          ))}
         </>
   )
 }

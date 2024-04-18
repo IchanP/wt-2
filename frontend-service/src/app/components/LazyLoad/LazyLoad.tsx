@@ -24,6 +24,8 @@ const LazyLoad = ({ children }: {children: JSX.Element}): React.JSX.Element => {
     if (domRef.current) {
       observer.observe(domRef.current)
     }
+
+    // Clean up observer when the component is removed from the DOM
     return () => observer.disconnect()
   }, [])
 

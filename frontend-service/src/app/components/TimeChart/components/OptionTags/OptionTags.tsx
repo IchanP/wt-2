@@ -1,7 +1,6 @@
 'use client'
 
 import ColoredTag from '@/app/components/ColoredTag/ColoredTag'
-import { useEffect, useState } from 'react'
 
 interface SearchProps {
     searchOptions: Array<MappedTag>;
