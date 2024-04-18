@@ -9,4 +9,4 @@ This application is not designed to be publicly facing the internet. It was deve
 
 ### Acknowledgements
 
-- [manami-project](https://github.com/manami-project) For the anime dataset used in the AnimeModel store.
+- [manami-project](https://github.com/manami-project/anime-offline-database) For the anime dataset used in the AnimeModel store.

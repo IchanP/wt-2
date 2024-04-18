@@ -126,4 +126,4 @@ This will fetch the anime document with the id ``18749``.
 
 #### Example Response
 
-The API will return a full Anime document. See the [Anime Data Type](./datatypes.md#anime) for a comprehensive list of fields.
+The API will return a singular full Anime document. See the [Anime Data Type](./datatypes.md#anime) for a comprehensive list of fields.

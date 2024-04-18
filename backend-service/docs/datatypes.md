@@ -1,6 +1,6 @@
 # Data Types
 
-## Anime
+## Anime Type Definitions
 
 The `Anime` data type represents a single anime document in the database. It contains information about the anime, such as its title, type, number of episodes, and more.
 

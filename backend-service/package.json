@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx src/server.ts",
     "dev": "nodemon",
-    "populate": "tsx populatemongo.ts"
+    "populate": "tsx populatemongo.ts",
+    "lint": "eslint . --ext .ts"
   },
   "type": "module",
   "devDependencies": {
