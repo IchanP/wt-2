@@ -3,6 +3,7 @@ import RoundedRowDiv from '../../RoundedRowDiv'
 import React from 'react'
 import { buildMappedTags } from '@/app/utils'
 import SideBarTags from '../SideBarTags'
+import ParagraphOneLiner from '../../ParagraphOneLiner'
 
 /**
  * Displays a sidebar with information about the anime.
@@ -28,20 +29,22 @@ const AnimeSidebar = ({ animeData }: {animeData: CombinedIAnimeData}) => {
                 />
             </div>
             <RoundedRowDiv maxHeight=''>
-               {iAnimeData.animeSeason.year && <p className='text-lg w-full'>Year: {iAnimeData.animeSeason.year}</p> }
-               {(iAnimeData.animeSeason.season && iAnimeData.animeSeason.season !== 'UNDEFINED') && <p className='text-lg w-full'>Season: {iAnimeData.animeSeason.season}</p> }
-                <p className='text-lg w-full'>Type: {iAnimeData.type}</p>
-                <p className='text-lg w-full'>Episodes: {iAnimeData.episodes}</p>
-                {externalAnimeData?.duration && <p className='text-lg w-full'>Duration: {externalAnimeData.duration}</p>}
+               {iAnimeData.animeSeason.year && <ParagraphOneLiner text={`Year: ${iAnimeData.animeSeason.year}`}/> }
+               {(iAnimeData.animeSeason.season && iAnimeData.animeSeason.season !== 'UNDEFINED') && <ParagraphOneLiner text={`Season: ${iAnimeData.animeSeason.season}`}/> }
+                <ParagraphOneLiner text={`Type: ${iAnimeData.type}`} />
+                <ParagraphOneLiner text={`Episodes: ${iAnimeData.episodes}`}/>
+                {externalAnimeData?.duration && <ParagraphOneLiner text={`Duration: ${externalAnimeData.duration}`} />}
+
                 {externalAnimeData?.studios &&
-                <p className='text-lg w-full'>Studios:
-                    {externalAnimeData?.studios.map((studio) => (
-                        <span key={studio.name}>  {studio.name} </span>
+                <ParagraphOneLiner text={'Studios: '}>
+                    {...externalAnimeData?.studios.map((studio) => (
+                    <span key={studio.name}>{studio.name} </span>
                     ))}
-                </p>}
+                    </ParagraphOneLiner>}
+
             </RoundedRowDiv>
             <RoundedRowDiv maxHeight='max-h-48' isExpandable={true}>
-                    {iAnimeData.synonyms.map((altTitle: string) => (<p key={altTitle} className='text-lg w-full'>{altTitle}</p>))}
+                    {iAnimeData.synonyms.map((altTitle: string) => (<ParagraphOneLiner key={altTitle} text={altTitle}/>))}
             </RoundedRowDiv>
             <RoundedRowDiv maxHeight='max-h-48' isExpandable={true}>
                     <SideBarTags

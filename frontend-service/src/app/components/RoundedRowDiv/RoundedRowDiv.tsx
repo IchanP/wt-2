@@ -45,7 +45,7 @@ const RoundedRowDiv = ({ children, maxHeight, isExpandable = false }: RoundedRow
     }
     checkOverflow()
 
-    // Clean up event listener when the component is removed from the DOM
+    // Clean up event listener when the component is removed from the
     window.addEventListener('resize', checkOverflow)
     return () => window.removeEventListener('resize', checkOverflow)
   }, [children])

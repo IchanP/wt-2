@@ -55,3 +55,8 @@ interface CombinedIAnimeData {
     anime: IAnime;
     externalData: ExternalAnime | null;
 }
+
+interface ImageDisplay {
+    title: string,
+    image: string
+}

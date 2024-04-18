@@ -1,5 +1,6 @@
-import { convertMinutesToHoursAndMinutes, fetchAndThrow } from './index'
-import { NoValidSourcesError } from './Errors/NoValidSourcesError'
+import { convertMinutesToHoursAndMinutes, fetchAndThrow } from '../index'
+import { NoValidSourcesError } from '../Errors/NoValidSourcesError'
+import { constructJikanUrl, kitsuBaseUrl } from './baseUrls'
 interface ProductionHateoasLinks {
     attributes: {
         role: string
@@ -46,7 +47,7 @@ export async function fetchAnimeExternally (options: string[]) {
 async function fetchFromJikan (source: string) {
   const malId = source.split('/').pop()
 
-  const jikanUrl = `https://api.jikan.moe/v4/anime/${malId}/full`
+  const jikanUrl = constructJikanUrl(malId as string)
 
   const jsonData = await fetchAndThrow(jikanUrl)
   return createExternalAnime(jsonData.data)
@@ -60,7 +61,7 @@ async function fetchFromJikan (source: string) {
  */
 async function fetchFromKitsu (source: string): Promise<ExternalAnime> {
   const kitsuId = source.split('/').pop()
-  const kitsuUrl = `https://kitsu.io/api/edge/anime/${kitsuId}`
+  const kitsuUrl = kitsuBaseUrl + kitsuId
 
   const jsonData = await fetchAndThrow(kitsuUrl)
   const episodeLength = jsonData.data.attributes.episodeLength

@@ -53,7 +53,7 @@ const SearchClient = () => {
         placeHolderText="Search for an anime"
         />
         {notFound && <p className='mt-10 text-2xl font-bold'>No Results</p>}
-        <div className="flex flex-row flex-wrap gap-10 mt-10 w-full">
+        <div className="flex justify-center flex-row flex-wrap gap-10 mt-10 w-full">
             {foundAnime.map((anime) => (
               <>
               <LazyLoad key={anime.animeId} >

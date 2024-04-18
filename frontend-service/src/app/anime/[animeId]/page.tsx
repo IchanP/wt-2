@@ -1,7 +1,7 @@
 import IndividualAnimeClient from '@/app/components/IndividualAnime/IndividualAnimeClient'
 import { fetchAndThrow } from '@/app/utils'
 import { NoValidSourcesError } from '@/app/utils/Errors/NoValidSourcesError'
-import { fetchAnimeExternally } from '@/app/utils/externalApiFetchers'
+import { fetchAnimeExternally } from '@/app/utils/externalFetchers/externalApiFetchers'
 
 interface URLParam {
     animeId: string;

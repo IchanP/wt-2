@@ -48,12 +48,13 @@ export function convertMinutesToHoursAndMinutes (minutes: number): string {
  * @param {string} url - The URL from where the data will be fetched.
  * @returns {Promise<JSON>} The fetched JSON data.
  */
-export async function fetchAndThrow (url: string) {
+export async function fetchAndThrow (url: string): Promise<JSON> {
   const response = await fetch(url, {
     // TODO change this to cache
     cache: 'no-cache'
   })
   if (!response.ok) {
+    console.log(response)
     throw new Error('Failed to fetch anime data')
   }
   return response.json()
@@ -67,4 +68,20 @@ export async function fetchAndThrow (url: string) {
  */
 export function buildMappedTags (data: Array<string>): Array<MappedTag> {
   return data.map((tag: string) => ({ name: tag, color: generateRandomColor() }))
+}
+
+/**
+ *
+ * @param arr1
+ * @param arr2
+ * @param arr3
+ */
+export function getLargestArray (arr1, arr2, arr3) {
+  if (arr1.length >= arr2.length && arr1.length >= arr3.length) {
+    return arr1
+  } else if (arr2.length >= arr1.length && arr2.length >= arr3.length) {
+    return arr2
+  } else {
+    return arr3
+  }
 }

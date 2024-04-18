@@ -21,6 +21,7 @@ const SideBarTags = ({ colorTags }: {colorTags: MappedTag[]}) => {
   }
   return (
         <>
+        <p ></p>
           {colorTags.map((tag) => (
             <ColoredTag
                 key={tag.name}

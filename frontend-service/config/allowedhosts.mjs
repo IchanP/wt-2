@@ -1,5 +1,3 @@
-import { hostname } from "os";
-
 export const allowedHosts = [
   {
     protocol: 'https',
