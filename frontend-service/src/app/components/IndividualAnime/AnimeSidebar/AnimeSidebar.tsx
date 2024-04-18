@@ -15,7 +15,7 @@ const AnimeSidebar = ({ animeData }: {animeData: CombinedIAnimeData}) => {
   const colorTags: MappedTag[] = buildMappedTags(animeData.anime.tags)
   const iAnimeData = animeData.anime as IAnime
   return (
-        <div className="flex flex-col justify-center items-center w-3/4 p-5 rounded-md">
+        <div className="space-y-2 flex flex-col h-full justify-items-start items-center w-3/4 rounded-md">
             <div className="p-2 w-full bg-slate-700 shadow-[8px_5px_5px_3px_rgba(0.1,0.1,0.1,0.1)]">
                 <Image
                 src={animeData.anime.picture}
@@ -24,7 +24,7 @@ const AnimeSidebar = ({ animeData }: {animeData: CombinedIAnimeData}) => {
                 alt={animeData.anime.title}
                 />
             </div>
-            <RoundedRowDiv>
+            <RoundedRowDiv maxHeight=''>
                {iAnimeData.animeSeason.year && <p className='text-lg w-full'>Year: {iAnimeData.animeSeason.year}</p> }
                {(iAnimeData.animeSeason.season && iAnimeData.animeSeason.season !== 'UNDEFINED') && <p className='text-lg w-full'>Season: {iAnimeData.animeSeason.season}</p> }
                 <p className='text-lg w-full'>Episodes: {iAnimeData.episodes}</p>
@@ -35,7 +35,7 @@ const AnimeSidebar = ({ animeData }: {animeData: CombinedIAnimeData}) => {
                     ))}
                 </p>}
             </RoundedRowDiv>
-            <RoundedRowDiv>
+            <RoundedRowDiv maxHeight='max-h-48' isExpandable={true}>
                     <SideBarTags
                     colorTags={colorTags}
                     />

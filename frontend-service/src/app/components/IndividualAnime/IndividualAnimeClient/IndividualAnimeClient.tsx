@@ -10,7 +10,7 @@ import AnimeSidebar from '../AnimeSidebar'
 const IndividualAnimeClient = ({ animeData }: {animeData: CombinedIAnimeData}) => {
   return (
 <>
-<div className="mt-5 w-full">
+<div className="mt-5 min-h-screen w-full">
     <div className="flex flex-col justify-center items-center w-full bg-slate-900 text-center p-5">
         <h1 className="font-sans text-5xl">{animeData.anime.title}</h1>
     </div>

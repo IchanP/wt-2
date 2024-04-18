@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
  * @returns {React.JSX.Element} The simple anime block component.
  */
 const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBack: (animeId: number) => void }): React.JSX.Element => {
-  const [backgroundColor, setBackgroundColor] = useState<string>('bg-gray-400') 
+  const [backgroundColor, setBackgroundColor] = useState<string>('bg-gray-400')
   const fallBackImage = 'https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic.png'
   const [imgSrc, setImgSrc] = useState<string>()
 
