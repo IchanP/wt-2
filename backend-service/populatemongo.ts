@@ -23,7 +23,7 @@ syncer.startSync()
 
 await connectDB(process.env.MONGO_CONNECTION_STRING as string)
 await populate()
-// deleteIndex()
+// await deleteIndex()
 
 async function populate () {
   const file = fs.readFileSync('../anime-offline-database-minified.json', 'utf-8')

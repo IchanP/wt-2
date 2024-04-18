@@ -13,18 +13,17 @@ const LazyLoad = ({ children }: {children: JSX.Element}): React.JSX.Element => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
-      // We assume single child and threshold defined as 0.1
       if (entries[0].isIntersecting) {
         setIsVisible(true)
         // Stop observing after the element is visible
         observer.unobserve(domRef.current as HTMLDivElement)
       }
-    }, { threshold: 0.1 })
-
+    }, {
+      threshold: 0.1
+    })
     if (domRef.current) {
       observer.observe(domRef.current)
     }
-
     return () => observer.disconnect()
   }, [])
 

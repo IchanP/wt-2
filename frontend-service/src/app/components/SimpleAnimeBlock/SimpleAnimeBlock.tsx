@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
  * @param {IAnime} root0.anime - The anime title to be displayed.
  * @returns {React.JSX.Element} The simple anime block component.
  */
-const SimpleAnimeBlock = ({ anime }: {anime: IAnime}): React.JSX.Element => {
+const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBack: (animeTitle: string) => void }): React.JSX.Element => {
   const [backgroundColor, setBackgroundColor] = useState<string>('bg-gray-400') // Default background color
   useEffect(() => {
   /**
@@ -16,7 +16,7 @@ const SimpleAnimeBlock = ({ anime }: {anime: IAnime}): React.JSX.Element => {
    * @param {AnimeType} type - The type of the anime.
    * @returns {string} - The background color of the anime block.
    */
-    const decideBackgroundColor = (type: AnimeType) => {
+    const decideBackgroundColor = (type: AnimeType): string => {
       switch (type) {
         case 'TV':
           return 'bg-orange-950'
@@ -36,7 +36,7 @@ const SimpleAnimeBlock = ({ anime }: {anime: IAnime}): React.JSX.Element => {
   }, [anime])
 
   return (
-        <div className={backgroundColor + ' w-64 p-6 pt-3'}>
+        <div onClick={() => clickCallBack(anime.title)} className={backgroundColor + ' w-64 p-6 pt-3'}>
             <div className='h-20 min-w-20'>
                <p className="text-sm whitespace-pre-wrap">{anime.title}</p>
             </div>

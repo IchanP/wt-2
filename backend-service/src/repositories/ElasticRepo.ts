@@ -7,7 +7,6 @@ export class ElasticRepo implements ElasticIAnimeRepo {
  @inject(INVERSE_TYPES.IElasticClient) private service: IElasticClient
 
  async searchMultiMatch (query: string, fields: Array<string>, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
-   // TODO fields should have to contain the FULL query and not only parts of it...
    return await this.service.getClient().search<IAnime>({
      index: 'anime',
      ...(nextPageStartPoint?.length > 0 ? { search_after: nextPageStartPoint } : {}),
@@ -19,7 +18,9 @@ export class ElasticRepo implements ElasticIAnimeRepo {
        multi_match: {
          query,
          fields,
-         type: 'phrase'
+         type: 'phrase_prefix',
+         slop: 10, // Allows movement of words in the query
+         max_expansions: 100 // Limits the number of terms the query can expand to
        }
      },
      size

@@ -1,5 +1,6 @@
 // elasticsearchClient.ts
 import { Client } from '@elastic/elasticsearch'
+import { IndicesCreateRequest } from '@elastic/elasticsearch/lib/api/types.js'
 import fs from 'fs'
 import { injectable } from 'inversify'
 import path from 'path'
@@ -29,6 +30,22 @@ export class ElasticSearchClient implements IElasticClient {
           ca: fs.readFileSync(path.resolve(__dirname, '../http_ca.crt'))
         }
       })
+    }
+  }
+
+  async ensureIndexConfiguration (indexName: string, indexOptions: IndicesCreateRequest): Promise<void> {
+    try {
+      const exists = await this.client.indices.exists({ index: indexName })
+      if (!exists) {
+        await this.client.indices.create(indexOptions)
+
+        console.log(`Index ${indexName} created`)
+      } else {
+        console.log(`Index ${indexName} already exists`)
+      }
+    } catch (e: unknown) {
+      console.error('Failed to create index:', (e as Error).message)
+      process.exit(1) // Exit the program if index creation fails
     }
   }
 

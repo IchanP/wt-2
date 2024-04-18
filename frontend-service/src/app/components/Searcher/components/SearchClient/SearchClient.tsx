@@ -34,6 +34,17 @@ const SearchClient = () => {
     setNotFound(false)
     setFoundAnime(searchData.data)
   }
+
+  /**
+   * Routes to an individual anime page containing detailed information about the anime.
+   *
+   * @param {string} titleOfAnime - The title of the anime to route to.
+   */
+  const routeToAnimePage = (titleOfAnime: string) => {
+    console.log(titleOfAnime)
+    // TODO route to anime page
+  }
+
   return (
       <>
         <SearchForm
@@ -45,7 +56,10 @@ const SearchClient = () => {
             {foundAnime.map((anime) => (
               <>
               <LazyLoad key={anime.animeId} >
-                  <SimpleAnimeBlock anime={anime} />
+                  <SimpleAnimeBlock
+                  anime={anime}
+                  clickCallBack={routeToAnimePage}
+                  />
                </LazyLoad>
               </>
             ))}

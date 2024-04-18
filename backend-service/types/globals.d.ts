@@ -1,5 +1,5 @@
 import { Client } from '@elastic/elasticsearch'
-import { AggregationsAggregate, AggregationsCardinalityAggregate, SearchResponse } from '@elastic/elasticsearch/lib/api/types.js'
+import { AggregationsAggregate, AggregationsCardinalityAggregate, IndicesCreateRequest, SearchResponse } from '@elastic/elasticsearch/lib/api/types.js'
 
 declare global {
     type ElasticIndex = {
@@ -11,6 +11,7 @@ declare global {
     type TagData = { tag: string, data: BucketData[] }
     type YearRange = { earliest: number, latest: number}
     interface IElasticClient {
+    ensureIndexConfiguration(index: string, indexOptions: IndicesCreateRequest): Promise<void>;
     connectElastic(): void;
     getClient(): Client;
     indexDocument (index: ElasticIndex, id: string): void;
