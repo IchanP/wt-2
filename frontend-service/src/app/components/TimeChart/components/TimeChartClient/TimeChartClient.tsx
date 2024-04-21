@@ -68,7 +68,7 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
           onClickCallback={removeSelectedTag}
           excluded={[]}
         />
-       {showError && <div className="flex flex-col bg-red-950 w-1/2 fixed bottom-0 text-center pt-5 pb-5 rounded-md">
+       { showError && <div className="flex flex-col bg-red-950 w-1/2 fixed bottom-0 text-center pt-5 pb-5 rounded-md">
           <p className="text-lg">Something went wrong while fetching {errorTagName} data</p>
         </div> }
         </>

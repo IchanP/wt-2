@@ -46,6 +46,7 @@ const AnimeSidebar = ({ animeData }: {animeData: CombinedIAnimeData}) => {
             </RoundedRowDiv>
             <RoundedRowDiv maxHeight='max-h-48' isExpandable={true}>
                     <SideBarTags
+                    animeYear={iAnimeData.animeSeason.year as number}
                     colorTags={colorTags}
                     />
             </RoundedRowDiv>
