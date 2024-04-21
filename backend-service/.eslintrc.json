@@ -1,0 +1,19 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "@lnu"
+    ],
+    "rules": {
+      "no-undef": "off",
+      "jsdoc/no-undefined-types": "off"
+
+    },
+    "ignorePatterns":["node_modules"]
+  }

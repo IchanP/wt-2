@@ -18,5 +18,8 @@
     "react": {
         "version": "detect" // Automatically detect the React version
     }
+},
+"rules": {
+  "jsdoc/no-undefined-types": ["error", {"disableReporting":true}]
 }
 }
