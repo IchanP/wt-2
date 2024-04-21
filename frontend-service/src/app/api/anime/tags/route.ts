@@ -9,10 +9,21 @@ export const dynamic = 'force-dynamic'
  * @returns {Promise<NextResponse>} - Returns a response object.
  */
 export async function GET (): Promise<NextResponse> {
-  // TODO error handling
-  const response = await fetch(process.env.BACKEND_URL + '/api/anime/tags', { cache: 'force-cache' })
-  const data = await response.json()
-  return NextResponse.json({ data: data.data })
+  try {
+    const response = await fetch(process.env.BACKEND_URL + '/api/anime/tags', { cache: 'force-cache' })
+    if (!response.ok) {
+      throw new Error()
+    }
+    const data = await response.json()
+    return NextResponse.json({ data: data.data })
+  } catch (e: unknown) {
+    return new NextResponse(JSON.stringify({
+      error: 'Internal Server Error',
+      message: 'An error occurred while processing the request.'
+    }), {
+      status: 500
+    })
+  }
 }
 
 /**
@@ -22,16 +33,27 @@ export async function GET (): Promise<NextResponse> {
  * @returns {Promise<NextResponse>} - Returns a response object.
  */
 export async function POST (req: NextRequest): Promise<NextResponse> {
-  // TODO error handling check whether tag equals data.tag and throw error if not
-  const body = await req.json()
-  const tag = encodeURIComponent(body.tag)
-  const tagColor = body.tagColor
-  const yearRange = body.range as Span
-  const response = await fetch(process.env.BACKEND_URL + '/api/anime/tag' + `?tagname=${tag}&earliest=${yearRange.lowest}&latest=${yearRange.highest}`, {
-    method: 'GET',
-    cache: 'force-cache'
-  })
-  const data = await response.json()
-  const newTrace = buildTimeChartTrace(data.data, tagColor)
-  return NextResponse.json({ trace: newTrace })
+  try {
+    const body = await req.json()
+    const tag = encodeURIComponent(body.tag)
+    const tagColor = body.tagColor
+    const yearRange = body.range as Span
+    const response = await fetch(process.env.BACKEND_URL + '/api/anime/tag' + `?tagname=${tag}&earliest=${yearRange.lowest}&latest=${yearRange.highest}`, {
+      method: 'GET',
+      cache: 'force-cache'
+    })
+    if (!response.ok) {
+      throw new Error()
+    }
+    const data = await response.json()
+    const newTrace = buildTimeChartTrace(data.data, tagColor)
+    return NextResponse.json({ trace: newTrace })
+  } catch (e: unknown) {
+    return new NextResponse(JSON.stringify({
+      error: 'Internal Server Error',
+      message: 'An error occurred while processing the request.'
+    }), {
+      status: 500
+    })
+  }
 }

@@ -31,9 +31,10 @@ const IndividualAnimeClient = ({ animeData }: {animeData: CombinedIAnimeData}) =
             text={''}
             title={'Related Anime'}
             >
+              {(animeData.anime.relatedAnime && animeData.anime.relatedAnime.length > 0) &&
               <RelatedAnimeMapper
               relatedAnime={animeData.anime.relatedAnime}
-              />
+              />}
             </ParagraphBox>
         </div>
     </div>

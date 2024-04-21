@@ -15,12 +15,10 @@ import ParagraphOneLiner from '../../ParagraphOneLiner'
 const AnimeSidebar = ({ animeData }: {animeData: CombinedIAnimeData}) => {
   const iAnimeData = animeData.anime as IAnime
   const externalAnimeData = animeData.externalData as ExternalAnime | null
-
   const colorTags: MappedTag[] = buildMappedTags(iAnimeData.tags)
-
   return (
         <div className="space-y-2 flex flex-col h-full justify-items-start items-center w-3/4 rounded-md">
-            <div className="p-2 w-full bg-slate-700 shadow-[8px_5px_5px_3px_rgba(0.1,0.1,0.1,0.1)] rounded-md">
+            <div className="p-2 flex flex-col items-center w-full bg-slate-700 shadow-[8px_5px_5px_3px_rgba(0.1,0.1,0.1,0.1)] rounded-md">
                 <Image
                 src={iAnimeData.picture}
                 width={300}

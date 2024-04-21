@@ -24,14 +24,15 @@ const AnimePage = async ({ params }: {params: URLParam}): Promise<React.JSX.Elem
   const fetchAnimeData = async (): Promise<CombinedIAnimeData > => {
     let animeInfo: IAnime | undefined
     try {
-      const data = await fetchAndThrow(`${process.env.OWN_BASE_URL}/api/anime/${id}`)
-      animeInfo = data.data as IAnime
+      const data = await fetchAndThrow(`${process.env.OWN_BASE_URL}/api/anime/${id}`) as unknown as { data: IAnime }
+      animeInfo = data.data as unknown as IAnime
       const externalAnimeData = await fetchAnimeExternally(animeInfo.sources) as ExternalAnime
       return { anime: animeInfo, externalData: externalAnimeData }
     } catch (e: unknown) {
       if (e instanceof NoValidSourcesError && animeInfo) {
         return { anime: animeInfo, externalData: null }
       }
+      // Throw error and let nextjs redirect to error page automatically
       throw new Error('Something went wrong while fetching this anime...')
     }
   }

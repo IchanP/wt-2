@@ -46,7 +46,8 @@ const RelatedAnimeMapper = async ({ relatedAnime }: {relatedAnime: string[]}) =>
       return acc
     }, [])
   }
-
+  // TODO these are currently being fetched all at once causing slow loading times for certain pages
+  // Do bulk fethcing or lazy fetching to improve performance
   const unfilteredAnime = await fetchAllRelatedAnime()
   const filteredAnime = filterDuplicates(unfilteredAnime)
   return (

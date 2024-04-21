@@ -46,11 +46,11 @@ export function convertMinutesToHoursAndMinutes (minutes: number): string {
  * Fetches data externally and throws an error if the response is not ok.
  *
  * @param {string} url - The URL from where the data will be fetched.
- * @returns {Promise<JSON>} The fetched JSON data.
+ * @returns {Promise<object>} The fetched JSON data.
  */
 export async function fetchAndThrow (url: string): Promise<JSON> {
   const response = await fetch(url, {
-    cache: 'force-cache'
+    cache: 'no-cache'
   })
   if (!response.ok) {
     throw new Error('Failed to fetch anime data')

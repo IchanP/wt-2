@@ -11,7 +11,9 @@ enum ValidSearchFields {
   // eslint-disable-next-line no-unused-vars
   Title = 'title',
   // eslint-disable-next-line no-unused-vars
-  Synonyms = 'synonyms'
+  Synonyms = 'synonyms',
+  // eslint-disable-next-line no-unused-vars
+  Sources = 'sources'
 }
 
 /**

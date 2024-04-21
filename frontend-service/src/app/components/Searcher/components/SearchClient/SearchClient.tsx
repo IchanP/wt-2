@@ -8,7 +8,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-
 /**
  * The search client handles the logic for the search page.
  *

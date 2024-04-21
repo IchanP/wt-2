@@ -17,6 +17,8 @@ import { yearRange } from '../constants'
 const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partial<PlotData> }): React.JSX.Element => {
   const [excluded, setExcluded] = useState<Array<MappedTag>>([])
   const [data, setData] = useState<Partial<PlotData>[]>([total])
+  const [showError, setShowError] = useState(false)
+  const [errorTagName, setErrorTagName] = useState('')
   /**
    * Fetches the tag that was selected and sets it as an unselectable tag in the TimeChart component.
    *
@@ -28,8 +30,12 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
       body: JSON.stringify({ tag: tag.name, range: yearRange, tagColor: tag.color })
     })
     if (!response.ok) {
-      // TODO display an error message somewhere on screen for a few seconds
-      throw new Error('Failed to fetch tag data')
+      setShowError(true)
+      setErrorTagName(tag.name)
+      setTimeout(() => {
+        setShowError(false)
+      }, 4000)
+      return
     }
     const jsonData = await response.json()
     setExcluded([...excluded, tag])
@@ -62,6 +68,9 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
           onClickCallback={removeSelectedTag}
           excluded={[]}
         />
+       {showError && <div className="flex flex-col bg-red-950 w-1/2 fixed bottom-0 text-center pt-5 pb-5 rounded-md">
+          <p className="text-lg">Something went wrong while fetching {errorTagName} data</p>
+        </div> }
         </>
   )
 }

@@ -17,6 +17,10 @@ const TimeChartFetcher = async (): Promise<React.JSX.Element> => {
     const response = await fetch(`${process.env.OWN_BASE_URL}/api/anime/tags`, {
       cache: 'no-cache'
     })
+    if (!response.ok) {
+      // Unrecoverable error so we just throw an error and let the error boundary handle it
+      throw new Error('Internal Server Error')
+    }
     const data = await response.json()
     const coloredTags: MappedTag[] = buildMappedTags(data.data)
     return coloredTags.sort((a, b) => a.name.localeCompare(b.name))
@@ -33,6 +37,10 @@ const TimeChartFetcher = async (): Promise<React.JSX.Element> => {
       cache: 'no-cache',
       body: JSON.stringify({ range: yearRange })
     })
+    if (!response.ok) {
+      // Unrecoverable error so we just throw an error and let the error boundary handle it
+      throw new Error('Internal Server Error')
+    }
     const data = await response.json()
     return data.trace
   }

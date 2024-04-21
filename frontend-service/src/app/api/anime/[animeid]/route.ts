@@ -15,10 +15,9 @@ interface AnimeIdParams {
  * @returns {NextResponse} - Returns a response object containing the data about the anime.
  */
 export async function GET (request: NextRequest, { params }: AnimeIdParams): Promise<NextResponse> {
-  // TODO error handling
   const animeId = params.animeid
   const response = await fetch(`${process.env.BACKEND_URL}/api/anime/${animeId}`, {
-    cache: 'force-cache'
+    cache: 'no-cache'
   })
   if (!response.ok) {
     throw new FailFetchError('Failed to fetch from backend.')

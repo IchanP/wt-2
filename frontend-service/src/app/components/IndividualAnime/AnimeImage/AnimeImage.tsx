@@ -12,7 +12,7 @@ const AnimeImage = ({ anime }: {anime: IAnime}) => {
   return (
     <Link href={`./${anime.animeId}`}>
     <div key={anime.animeId} className="relative flex flex-col items-center p-3 bg-slate-700 rounded-md">
-        <Image src={anime.picture} width={250} height={400} alt={anime.title} objectFit='contain' className="block w-64 h-auto" />
+        <Image src={anime.picture} width={250} height={400} alt={anime.title} className="block w-64 h-auto" />
         <h1 className="rounded-b-md absolute bottom-0 left-0 w-full text-center text-white bg-black bg-opacity-60 px-0 py-2 text-lg">
             {anime.title}
         </h1>
