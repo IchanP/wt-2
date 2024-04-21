@@ -52,7 +52,6 @@ const RelatedAnimeMapper = async ({ relatedAnime }: {relatedAnime: string[]}) =>
   return (
         <>
         <div className="flex flex-row gap-x-28 gap-y-2 flex-start flex-wrap">
-          {/* TODO some images are rectangles and don't fit the height properly, fix this by making the width and height auto, should also be a bit smaller... */}
           {filteredAnime.map((anime) => (
             <AnimeImage key={anime.animeId} anime={anime} />
           ))}

@@ -1,4 +1,3 @@
-import { sortAnimeByKeyword } from '@/app/utils/sortanime'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'

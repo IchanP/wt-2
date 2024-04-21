@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
  * @param {IAnime} root0.anime - The anime title to be displayed.
  * @returns {React.JSX.Element} The simple anime block component.
  */
-const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBack: (animeId: number) => void }): React.JSX.Element => {
+const SimpleAnimeBlock = ({ anime }: {anime: IAnime}): React.JSX.Element => {
   const [backgroundColor, setBackgroundColor] = useState<string>('bg-gray-400')
   const [imgSrc, setImgSrc] = useState<string>()
   const fallBackImage = 'https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic.png'
@@ -62,7 +62,7 @@ const SimpleAnimeBlock = ({ anime, clickCallBack }: {anime: IAnime, clickCallBac
   }
 
   return (
-        <div onClick={() => clickCallBack(anime.animeId)} className={backgroundColor + ' w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
+        <div className={backgroundColor + ' w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
             <Image
             src={imgSrc as string}
             width={225}

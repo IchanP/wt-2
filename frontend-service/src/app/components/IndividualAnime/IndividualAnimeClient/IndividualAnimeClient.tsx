@@ -22,7 +22,7 @@ const IndividualAnimeClient = ({ animeData }: {animeData: CombinedIAnimeData}) =
               animeData={animeData}
              />
         </div>
-        <div className=" basis-3/4 bg-gray-800 flex flex-col gap-24 items-start text-center text-white flex-wrap mr-10 rounded-md">
+        <div className=" basis-3/4 bg-gray-800 flex flex-col gap-24 items-start text-center text-white flex-wrap mr-10 rounded-md pb-3">
            {animeData?.externalData?.synopsis && <ParagraphBox
               text={animeData.externalData.synopsis}
               title={'Synopsis'}

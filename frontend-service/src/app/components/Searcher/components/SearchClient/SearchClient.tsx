@@ -4,6 +4,7 @@ import LazyLoad from '@/app/components/LazyLoad'
 import SearchForm from '@/app/components/Searcher/components/SearchForm'
 import SimpleAnimeBlock from '@/app/components/SimpleAnimeBlock'
 import { sortAnimeByKeyword } from '@/app/utils/sortanime'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -59,11 +60,12 @@ const SearchClient = () => {
             {foundAnime.map((anime) => (
               <>
               <LazyLoad key={anime.animeId} >
-                  <SimpleAnimeBlock
-                  key={anime.animeId}
-                  anime={anime}
-                  clickCallBack={routeToAnimePage}
-                  />
+                <Link href={`/anime/${anime.animeId}`}>
+                    <SimpleAnimeBlock
+                    key={anime.animeId}
+                    anime={anime}
+                    />
+                  </Link>
                </LazyLoad>
               </>
             ))}
