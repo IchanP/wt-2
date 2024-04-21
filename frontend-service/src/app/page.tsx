@@ -1,4 +1,6 @@
 import TimeChartFetcher from './components/TimeChart/components/TimeChartFetcher/TimeChartFetcher'
+export const dynamic = 'force-dynamic'
+
 /**
  * The main page of the application.
  *

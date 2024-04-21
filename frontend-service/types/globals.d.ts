@@ -42,13 +42,22 @@ type Studio = {
 interface KitsuAnimeData {
     attributes: {
         synopsis: string;
+        name: string;
+        episodeLength: number;
+    }
+    relationships: {
+        animeProductions: {
+            links: {
+                related: string;
+            }
+        }
     }
 }
 
 interface ExternalAnime {
     synopsis: string;
-    studios: Studio[];
-    duration: string;
+    studios: Studio[] | udnefined;
+    duration: string | undefined;
 }
 
 interface CombinedIAnimeData {

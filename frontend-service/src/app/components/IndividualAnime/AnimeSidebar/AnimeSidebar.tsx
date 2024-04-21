@@ -35,7 +35,7 @@ const AnimeSidebar = ({ animeData }: {animeData: CombinedIAnimeData}) => {
 
                 {externalAnimeData?.studios &&
                 <ParagraphOneLiner text={'Studios: '}>
-                    {...externalAnimeData?.studios.map((studio) => (
+                    {...externalAnimeData?.studios.map((studio: Studio) => (
                     <span key={studio.name}>{studio.name} </span>
                     ))}
                     </ParagraphOneLiner>}

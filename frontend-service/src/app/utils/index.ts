@@ -46,9 +46,9 @@ export function convertMinutesToHoursAndMinutes (minutes: number): string {
  * Fetches data externally and throws an error if the response is not ok.
  *
  * @param {string} url - The URL from where the data will be fetched.
- * @returns {Promise<object>} The fetched JSON data.
+ * @returns {Promise<{Array<object>}>} The fetched JSON data.
  */
-export async function fetchAndThrow (url: string): Promise<JSON> {
+export async function fetchAndThrow (url: string): Promise<{data: Array<object>}> {
   const response = await fetch(url, {
     cache: 'no-cache'
   })

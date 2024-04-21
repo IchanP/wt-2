@@ -50,7 +50,7 @@ async function fetchFromJikan (source: string) {
   const jikanUrl = constructJikanUrl(malId as string)
 
   const jsonData = await fetchAndThrow(jikanUrl)
-  return createExternalAnime(jsonData.data)
+  return createExternalAnime(jsonData.data as unknown as ExternalAnime)
 }
 
 /**
@@ -63,11 +63,13 @@ async function fetchFromKitsu (source: string): Promise<ExternalAnime> {
   const kitsuId = source.split('/').pop()
   const kitsuUrl = kitsuBaseUrl + kitsuId
 
-  const jsonData = await fetchAndThrow(kitsuUrl)
+  const jsonData = await fetchAndThrow(kitsuUrl) as unknown as { data: KitsuAnimeData }
   const episodeLength = jsonData.data.attributes.episodeLength
 
   const productionLink = jsonData.data.relationships.animeProductions.links.related
-  const kitsuAnime: ExternalAnime = jsonData.data.attributes
+
+  const kitsuAnime: ExternalAnime = { studios: [], synopsis: '', duration: '' }
+  kitsuAnime.synopsis = jsonData.data.attributes.synopsis
 
   await fetchKitsuStudio(productionLink, kitsuAnime)
   kitsuAnime.duration = convertMinutesToHoursAndMinutes(episodeLength)
@@ -111,12 +113,12 @@ function findStudioLink (productionData: ProductionHateoasLinks[]): string | und
  * @returns {Promise<void>} The fetched studio data.
  */
 async function fetchKitsuStudio (url: string, kitsuAnimeData: ExternalAnime) {
-  const productionData = await fetchAndThrow(url)
+  const productionData = await fetchAndThrow(url) as { data: ProductionHateoasLinks[] }
   const studioLink = findStudioLink(productionData.data)
   const studioName = 'Unknown studio'
   const studio: Studio = { name: studioName, url: studioLink }
   if (studioLink) {
-    const studioData = await fetchAndThrow(studioLink as string)
+    const studioData = await fetchAndThrow(studioLink as string) as unknown as { data: KitsuAnimeData }
     studio.name = studioData.data.attributes.name
   }
   kitsuAnimeData.studios = [studio]
