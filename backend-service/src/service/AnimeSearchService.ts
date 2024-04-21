@@ -22,6 +22,9 @@ export class AnimeSearchService implements ISearchAnime {
    * @returns {Promise<IAnime[]>} The anime documents that match the tag and year range.
    */
   async searchGenreByYear (tag: string, yearRange: YearRange): Promise<IAnime[]> {
+    if (tag === 'Total') {
+      // TODO: Fetch all within year range
+    }
     return this.#genericSearch(this.repo.searchGenreByYear.bind(this.repo), tag, yearRange)
   }
 

@@ -25,7 +25,7 @@ const SearchPage = async (params: SearchPageParams) => {
     })
     if (genreResponse.ok) {
       const genreData = await genreResponse.json()
-      animeData.push(...genreData.data)
+      animeData.push(...genreData.data.data)
     }
   } else if (params.searchParams.keyword && params.searchParams.searchFields) {
     const searchResponse = await fetch(process.env.OWN_BASE_URL + '/api/anime/search', {

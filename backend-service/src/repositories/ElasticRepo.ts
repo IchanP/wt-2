@@ -46,14 +46,47 @@ export class ElasticRepo implements ElasticIAnimeRepo {
  }
 
  /**
+  * Searches for anime with the given tag and year range.
+  * Returns the results in the order of score in descending order and then by animeId in ascending order.
   *
-  * @param genre
-  * @param year
-  * @param nextPageStartPoint
-  * @param size
+  * @param {string} genre - The tag to search for.
+  * @param {YearRange} year - The range of years to search for the tag in.
+  * @param {Array<number>} nextPageStartPoint - The starting point for the next page of results, gathered from the sort field of the last result. If not provided, the first page is returned.
+  * @param {number} size - The size of the page. The maximum number of results to return for each call.
+  * @returns {Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>} The search response containing the anime documents that match the query and further metadata for requesting the next page.
   */
- async searchGenreByYear (genre: string, year: number, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
-
+ async searchGenreByYear (genre: string, year: YearRange, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
+   return await this.service.getClient().search<IAnime>({
+     index: this.#index,
+     ...(nextPageStartPoint?.length > 0 ? { search_after: nextPageStartPoint } : {}),
+     sort: [
+       { _score: { order: 'desc' } },
+       { animeId: { order: 'asc' } }
+     ],
+     query: {
+       bool: {
+         must: [
+           {
+             range: {
+               'animeSeason.year': {
+                 gte: year.earliest,
+                 lte: year.latest
+               }
+             }
+           },
+           {
+             match: {
+               tags: {
+                 query: genre,
+                 operator: 'and'
+               }
+             }
+           }
+         ]
+       }
+     },
+     size
+   })
  }
 
  /**
