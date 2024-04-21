@@ -6,6 +6,14 @@ import { InvalidQueryError } from 'utils/Errors/InvalidQueryError.ts'
 import createError from 'http-errors'
 import { NotFoundError } from 'utils/Errors/NotFoundError.ts'
 
+// eslint-disable-next-line no-unused-vars
+enum ValidSearchFields {
+  // eslint-disable-next-line no-unused-vars
+  Title = 'title',
+  // eslint-disable-next-line no-unused-vars
+  Synonyms = 'synonyms'
+}
+
 /**
  * Controller that handles requests related to fetching resources related to anime.
  */
@@ -29,12 +37,8 @@ export class AnimeController {
         throw new InvalidQueryError('Title must be provided')
       }
 
-      // TODO make the below check against the possible allowed fields essentially make an enum of the allowed fields
       const searchField: string = req.query.searchFields as string
-      if (!searchField) {
-        throw new InvalidQueryError('Search fields must be provided')
-      }
-      const searchFields = searchField.split(' ')
+      const searchFields = this.#parseSearchFields(searchField)
 
       const data = await this.service.searchAnime(title, searchFields)
       return res.json({ data })
@@ -77,7 +81,6 @@ export class AnimeController {
    */
   async fetchTagData (req: Request, res: Response, next: NextFunction) {
     try {
-      // TODO make the below check a general function where you pass in the query name to retrieve the query value
       const tag = req.query.tagname as string
       if (!tag) {
         throw new InvalidQueryError('Tag name must be provided')
@@ -133,6 +136,7 @@ export class AnimeController {
       if (!id || isNaN(id)) {
         throw new InvalidQueryError('Id must be provided and be a number')
       }
+
       const data = await this.service.getAnimeById(id)
       return res.json({ data })
     } catch (e: unknown) {
@@ -190,5 +194,25 @@ export class AnimeController {
       throw new InvalidQueryError('Earliest must be less than latest')
     }
     return { earliest, latest }
+  }
+
+  /**
+   * Verifies that the passed paramater is a string and that the search fields are of a valid type.
+   * Throws an InvalidQueryError if the search fields are not valid.
+   *
+   * @param {string} searchField - The search field to be parsed.
+   * @returns {string[]} The parsed search fields.
+   */
+  #parseSearchFields (searchField: string | undefined) {
+    if (!searchField) {
+      throw new InvalidQueryError('Search fields must be provided')
+    }
+    const searchFields = searchField.split(' ')
+    searchFields.forEach((field: string) => {
+      if (!Object.values(ValidSearchFields).includes(field as ValidSearchFields)) {
+        throw new InvalidQueryError(`Invalid search field: ${field}`)
+      }
+    })
+    return searchFields
   }
 }

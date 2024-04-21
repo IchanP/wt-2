@@ -9,7 +9,8 @@ As the API was designed around the idea of it being used as a backend standalone
 The search endpoint is used for keyword searching.
 
 - Method ``GET``
-- Query params// TODO maybe this should be an array as well?
+- Query params:
+  - ``keyword``: The keyword to search for
   - ``searchFields``: The fields of the anime object to search for the keyword in.
 
 #### Example /search URL
@@ -58,13 +59,13 @@ The tag endpoint is used to fetch aggregated data about a tag based on year. Thi
 
 An example URL may look like this:
 
-``http://localhost:{port}/api/anime/tag?tag=Action&earliest=2010&latest=2020``
+``http://localhost:{port}/api/anime/tag?tag=action&earliest=2010&latest=2020``
 
 #### Considerations
 
 The result may be empty if there are no anime that have the tag in the specified range. In this case, the return value will simply be an empty array and should be handled by the requester.
 
-This will fetch the number of anime that have the tag ``Action`` in the range of 2010 to 2020 and return the count *for each year*.
+This will fetch the number of anime that have the tag ``action`` in the range of 2010 to 2020 and return the count *for each year*.
 
 ##### Example /tag Response
 

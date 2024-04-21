@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Client } from '@elastic/elasticsearch'
 import { AggregationsAggregate, AggregationsCardinalityAggregate, IndicesCreateRequest, SearchResponse } from '@elastic/elasticsearch/lib/api/types.js'
 
@@ -72,5 +73,10 @@ declare global {
         getOneByAnimeId(id: number): Promise<IAnime>
         searchAnimeByYear (nextPageStartPoint: Array<number>, size: number, yearRange: YearRange): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>
         searchGenreByYear (nextPageStartPoint: Array<number>, size: number, year: YearRange, genre: string): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>
+    }
+
+    enum ValidSearchFields {
+        Title = 'title',
+        Synonyms = 'synonyms'
     }
 }
