@@ -18,13 +18,13 @@ export class ElasticRepo implements ElasticIAnimeRepo {
   * @example
   * // returns ["Oshi no Ko", "Oshin"] but does NOT return ["Moshidora"]
   * searchAnime('Oshi', ['title']) will
-  * @param {string} query - The phrase or query to search for.
-  * @param {string[]} fields - The name of the fields to search for the query in.
   * @param {Array<number>} nextPageStartPoint - The starting point for the next page of results, gathered from the sort field of the last result. If not provided, the first page is returned.
   * @param {number} size - The size of the page. The maximum number of results to return for each call.
+  * @param {string[]} fields - The name of the fields to search for the query in.
+  * @param {string} query - The phrase or query to search for.
   * @returns {Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>} The search response containing the anime documents that match the query and further metadata for requesting the next page.
   */
- async searchMultiMatch (query: string, fields: Array<string>, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
+ async searchMultiMatch (nextPageStartPoint: Array<number>, size: number, fields: Array<string>, query: string): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
    return await this.service.getClient().search<IAnime>({
      index: this.#index,
      ...(nextPageStartPoint?.length > 0 ? { search_after: nextPageStartPoint } : {}),
@@ -46,16 +46,44 @@ export class ElasticRepo implements ElasticIAnimeRepo {
  }
 
  /**
+  * Fetches any anime that fall within the provided year range.
+  *
+  * @param {Array<number>} nextPageStartPoint - The starting point for the next page of results, gathered from the sort field of the last result. If not provided, the first page is returned.
+  * @param {number} size - The size of the page. The maximum number of results to return for each call.
+  * @param {YearRange} year - The range of year to find anime within.
+  * @returns {Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>} The search response containing the anime documents that match the query and further metadata for requesting the next page.
+  */
+ async searchAnimeByYear (nextPageStartPoint: Array<number>, size: number, year: YearRange): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
+   return await this.service.getClient().search<IAnime>({
+     index: this.#index,
+     ...(nextPageStartPoint?.length > 0 ? { search_after: nextPageStartPoint } : {}),
+     sort: [
+       { _score: { order: 'desc' } },
+       { animeId: { order: 'asc' } }
+     ],
+     query: {
+       range: {
+         'animeSeason.year': {
+           gte: year.earliest,
+           lte: year.latest
+         }
+       }
+     },
+     size
+   })
+ }
+
+ /**
   * Searches for anime with the given tag and year range.
   * Returns the results in the order of score in descending order and then by animeId in ascending order.
   *
-  * @param {string} genre - The tag to search for.
-  * @param {YearRange} year - The range of years to search for the tag in.
   * @param {Array<number>} nextPageStartPoint - The starting point for the next page of results, gathered from the sort field of the last result. If not provided, the first page is returned.
   * @param {number} size - The size of the page. The maximum number of results to return for each call.
+  * @param {YearRange} year - The range of years to search for the tag in.
+  * @param {string} genre - The tag to search for.
   * @returns {Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>} The search response containing the anime documents that match the query and further metadata for requesting the next page.
   */
- async searchGenreByYear (genre: string, year: YearRange, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
+ async searchGenreByYear (nextPageStartPoint: Array<number>, size: number, year: YearRange, genre: string): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
    return await this.service.getClient().search<IAnime>({
      index: this.#index,
      ...(nextPageStartPoint?.length > 0 ? { search_after: nextPageStartPoint } : {}),

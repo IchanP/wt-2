@@ -3,7 +3,7 @@ import { INVERSE_TYPES } from 'config/types.ts'
 import { inject, injectable } from 'inversify'
 import { NotFoundError } from 'utils/Errors/NotFoundError.ts'
 
-type SearchFunction = (arg1: string, arg2: Array<string> | YearRange, startPoint: Array<number>, pageSize: number) => Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>;
+type SearchFunction = (startPoint: Array<number>, pageSize: number, arg1: Array<string> | YearRange, arg2?: string | undefined) => Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>;
 
 /**
  * Service layer for fetching anime related documents.
@@ -23,9 +23,9 @@ export class AnimeSearchService implements ISearchAnime {
    */
   async searchGenreByYear (tag: string, yearRange: YearRange): Promise<IAnime[]> {
     if (tag === 'Total') {
-      // TODO: Fetch all within year range
+      return this.#genericSearch(this.repo.searchAnimeByYear.bind(this.repo), yearRange, tag)
     }
-    return this.#genericSearch(this.repo.searchGenreByYear.bind(this.repo), tag, yearRange)
+    return this.#genericSearch(this.repo.searchGenreByYear.bind(this.repo), yearRange, tag)
   }
 
   /**
@@ -37,7 +37,7 @@ export class AnimeSearchService implements ISearchAnime {
    * @returns {Promise<IAnime[]>} The anime documents that match the query.
    */
   async searchAnime (query: string, fields: Array<string>): Promise<IAnime[]> {
-    return this.#genericSearch(this.repo.searchMultiMatch.bind(this.repo), query, fields)
+    return this.#genericSearch(this.repo.searchMultiMatch.bind(this.repo), fields, query)
   }
 
   /**
@@ -92,18 +92,18 @@ export class AnimeSearchService implements ISearchAnime {
    * Generic function to handle the search logic that was being repeated.
    *
    * @param {SearchFunction} searchFn The specific search function to use.
-   * @param {string} param1 The first parameter required by the search function.
-   * @param {number | string[]} param2 The second parameter required by the search function.
+   * @param {YearRange | string[]} param1 The first parameter required by the search function.
+   * @param {string | undefined} param2 The second parameter required by the search function.
    * @returns {Promise<IAnime[]>} The anime documents that match the conditions.
    */
-  async #genericSearch (searchFn: SearchFunction, param1: string, param2: YearRange | string[]): Promise<IAnime[]> {
+  async #genericSearch (searchFn: SearchFunction, param1: YearRange | string[], param2?: string | undefined): Promise<IAnime[]> {
     const pageSize = 10000
     let allHits: IAnime[] = []
     let nextPageStartPoint: Array<number> = []
     let moreResultsAvailable = true
 
     while (moreResultsAvailable) {
-      const response = await searchFn(param1, param2, nextPageStartPoint, pageSize)
+      const response = await searchFn(nextPageStartPoint, pageSize, param1, param2)
       const results = response.hits.hits.map(hit => hit._source)
       allHits = allHits.concat(results)
       if (results.length < pageSize) {
