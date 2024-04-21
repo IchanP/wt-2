@@ -2,6 +2,8 @@ import { buildMappedTags } from '@/app/utils'
 import TimeChartClient from '../TimeChartClient/TimeChartClient'
 import { yearRange } from '../constants'
 import { PlotData } from 'plotly.js'
+export const dynamic = 'force-dynamic'
+
 /**
  * Fetches data and handles certain logic for the time chart.
  *

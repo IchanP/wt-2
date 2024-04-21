@@ -5,6 +5,7 @@ import OptionTags from '../OptionTags'
 import TimeChart from '../TimeChart'
 import { PlotData } from 'plotly.js'
 import { yearRange } from '../constants'
+import LazyLoad from '@/app/components/LazyLoad'
 
 /**
  * The client side logic component for the TimeChart component.
@@ -59,10 +60,12 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
             onClickCallback={setSelectedTag}
             excluded={excluded}
         />
-        <TimeChart
-         data={data}
-         yearRange={yearRange}
-        />
+        <LazyLoad>
+          <TimeChart
+          data={data}
+          yearRange={yearRange}
+          />
+        </LazyLoad>
         <OptionTags
           searchOptions={excluded}
           onClickCallback={removeSelectedTag}
