@@ -12,7 +12,7 @@ The application is accessible on the web at [https://cscloud8-71.lnu.se](https:/
 - **Genre Popularity Timeline**: Explore how different genres and tags have varied in popularity over the years.
 - **Search Functionality**: Look up anime by titles.
 - **Anime Detail Pages**: View detailed information about each anime title, from several sources.
-// TODO add more features
+- **Genre Search**: You can display anime titles by genre by selecting a genre and year combination on the timechart or by selecting a genre tag on an individual anime page.   More robust search functionality by genre may be added in the future.
 
 ## External API
 

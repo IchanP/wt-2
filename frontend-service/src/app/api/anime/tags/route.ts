@@ -28,7 +28,8 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
   const tagColor = body.tagColor
   const yearRange = body.range as Span
   const response = await fetch(process.env.BACKEND_URL + '/api/anime/tag' + `?tagname=${tag}&earliest=${yearRange.lowest}&latest=${yearRange.highest}`, {
-    method: 'GET'
+    method: 'GET',
+    cache: 'force-cache'
   })
   const data = await response.json()
   const newTrace = buildTimeChartTrace(data.data, tagColor)

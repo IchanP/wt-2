@@ -5,6 +5,7 @@ import { Data, PlotData, PlotMouseEvent } from 'plotly.js'
 const Plot = dynamic(() => { return import('react-plotly.js') }, { ssr: false })
 
 interface PlotEventData {
+  x: number,
   fullData: {
     x: string,
     y: number

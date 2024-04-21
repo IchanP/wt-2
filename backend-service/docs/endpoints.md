@@ -9,8 +9,7 @@ As the API was designed around the idea of it being used as a backend standalone
 The search endpoint is used for keyword searching.
 
 - Method ``GET``
-- Query params:
-  - ``keyword``: The keyword to search for // TODO maybe this should be an array as well?
+- Query params// TODO maybe this should be an array as well?
   - ``searchFields``: The fields of the anime object to search for the keyword in.
 
 #### Example /search URL
@@ -127,3 +126,25 @@ This will fetch the anime document with the id ``18749``.
 #### Example Response
 
 The API will return a singular full Anime document. See the [Anime Data Type](./datatypes.md#anime) for a comprehensive list of fields.
+
+### /genre
+
+The genre endpoint fetches the anime that contain the passed tag and aired within the provided year range.
+
+- Method ``GET``
+- Query params:
+  - ``genre``: The genre to search for.
+  - ``earliest``: The start year of the range.
+  - ``latest``: The end year of the range.
+
+#### Example /genre URL
+
+An example URL may look like this:
+
+``http://localhost:{port}/api/anime/genre?genre=war&earliest=2010&latest=2020``
+
+This will fetch the anime that have the genre ``war`` and aired between 2010 and 2020.
+
+#### Example /genre Response
+
+The API will return an array of Anime documents. See the [Anime Data Type](./datatypes.md#anime) for a comprehensive list of fields.

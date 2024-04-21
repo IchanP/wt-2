@@ -8,8 +8,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-// TODO add a conditional foundAnime to display the anime blocks
-// Should be passable in the props
+
 /**
  * The search client handles the logic for the search page.
  *

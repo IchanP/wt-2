@@ -10,13 +10,14 @@ import ColoredTag from '../../ColoredTag'
  * @returns {React.JSX.Element} The sidebar tags component.
  */
 const SideBarTags = ({ colorTags }: {colorTags: MappedTag[]}) => {
-  // TODO
   /**
    * The callback function for when a tag is clicked.
    *
    * @param {MappedTag} tag - The values of the tag that was clicked.
    */
   const clickCallback = async (tag: MappedTag) => {
+    // TODO go to search page with the tag as a search query
+    // Pass 1975-2024 as the year range
     console.log('Tag clicked')
   }
   return (

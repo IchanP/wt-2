@@ -28,7 +28,7 @@ const TimeChartClient = ({ tags, total }: {tags: Array<MappedTag>, total: Partia
       body: JSON.stringify({ tag: tag.name, range: yearRange, tagColor: tag.color })
     })
     if (!response.ok) {
-      // TODO handle this
+      // TODO display an error message somewhere on screen for a few seconds
       throw new Error('Failed to fetch tag data')
     }
     const jsonData = await response.json()

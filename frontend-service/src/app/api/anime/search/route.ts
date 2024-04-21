@@ -14,8 +14,7 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
   const keyword = body.keyword
   const fields = body.searchFields.join('+')
   const data = await fetch(process.env.BACKEND_URL + `/api/anime/search?keyword=${keyword}&searchFields=${fields}` as string, {
-    // TODO may add cache?
-    cache: 'no-cache'
+    cache: 'force-cache'
   })
   const parsedData = await data.json()
   const anime = parsedData.data

@@ -50,8 +50,7 @@ export function convertMinutesToHoursAndMinutes (minutes: number): string {
  */
 export async function fetchAndThrow (url: string): Promise<JSON> {
   const response = await fetch(url, {
-    // TODO change this to cache
-    cache: 'no-cache'
+    cache: 'force-cache'
   })
   if (!response.ok) {
     throw new Error('Failed to fetch anime data')

@@ -1,4 +1,3 @@
-import { NextRequest } from 'next/server'
 import SearchClient from '../components/Searcher/components/SearchClient'
 import { sortAnimeByKeyword } from '../utils/sortanime'
 interface SearchPageParams {
@@ -18,6 +17,7 @@ interface SearchPageParams {
  */
 const SearchPage = async (params: SearchPageParams) => {
   const animeData = []
+  // TODO refactor this a bit it's ugly as hell...
   if (params.searchParams.tags && params.searchParams.year) {
     const genreResponse = await fetch(process.env.OWN_BASE_URL + `/api/anime/genre?tags=${params.searchParams.tags}&earliest=${params.searchParams.year}&latest=${params.searchParams.year}`, {
       method: 'GET',
@@ -25,7 +25,8 @@ const SearchPage = async (params: SearchPageParams) => {
     })
     if (genreResponse.ok) {
       const genreData = await genreResponse.json()
-      animeData.push(...genreData.data.data)
+      const sortedAlphabetically = genreData.data.data.sort((a: IAnime, b: IAnime) => a.title.localeCompare(b.title))
+      animeData.push(...sortedAlphabetically)
     }
   } else if (params.searchParams.keyword && params.searchParams.searchFields) {
     const searchResponse = await fetch(process.env.OWN_BASE_URL + '/api/anime/search', {

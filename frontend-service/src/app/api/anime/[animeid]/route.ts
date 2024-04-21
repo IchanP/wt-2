@@ -18,7 +18,7 @@ export async function GET (request: NextRequest, { params }: AnimeIdParams): Pro
   // TODO error handling
   const animeId = params.animeid
   const response = await fetch(`${process.env.BACKEND_URL}/api/anime/${animeId}`, {
-    cache: 'no-cache'
+    cache: 'force-cache'
   })
   if (!response.ok) {
     throw new FailFetchError('Failed to fetch from backend.')

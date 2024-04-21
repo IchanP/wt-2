@@ -9,8 +9,7 @@ export const dynamic = 'force-dynamic'
  */
 export async function GET () {
   const x = await fetch(process.env.BACKEND_URL + '/search/update' as string, {
-    // TODO may add cache?
-    cache: 'no-cache'
+    cache: 'force-cache'
   })
   const y = await x.json()
   console.log(y)

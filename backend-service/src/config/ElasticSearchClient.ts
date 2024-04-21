@@ -128,7 +128,6 @@ export class ElasticSearchClient implements IElasticClient {
     })
   }
 
-  // TODO: handle error
   /**
    * Checks that the connection to the elasticsearch client was successful.
    */
@@ -136,11 +135,9 @@ export class ElasticSearchClient implements IElasticClient {
     try {
       const response = await this.client.cluster.health({})
       console.log('Cluster Health:', response)
-      // Connection is successful if this point is reached
-      // You can check the status in the response, e.g., "green", "yellow", or "red"
     } catch (error) {
       console.error('Connection failed:', error)
-      // Handle connection failure
+      process.exit(1)
     }
   }
 }
