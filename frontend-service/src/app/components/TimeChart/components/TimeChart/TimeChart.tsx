@@ -16,7 +16,13 @@ const TimeChart = ({ data, yearRange }: {data: Partial<PlotData>[], yearRange: S
           <div className="mt-2">
             <Plot
             data={data as unknown as Data[]}
-            layout={{ width: 1500, title: `Popularity chart of tags since ${yearRange.lowest} to ${yearRange.highest}`, xaxis: { range: [yearRange.lowest, yearRange.highest], dtick: 1 }, modebar: { orientation: 'v' }, legend: { orientation: 'h' } }}
+            layout={{
+              width: 1500,
+              title: `Popularity chart of tags since ${yearRange.lowest} to ${yearRange.highest}`,
+              xaxis: { range: [yearRange.lowest, yearRange.highest], dtick: 1 },
+              modebar: { orientation: 'v' },
+              legend: { orientation: 'h' }
+            }}
             config={{ displayModeBar: true }}
             />
           </div>
