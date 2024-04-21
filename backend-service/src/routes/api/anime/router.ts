@@ -23,6 +23,10 @@ router.get('/search', (req, res, next) => {
   controller.searchAnimeTitle(req, res, next)
 })
 
+router.get('/genre', (req, res, next) => {
+  controller.searchGenreByYear(req, res, next)
+})
+
 router.get('/:id', (req, res, next) => {
   controller.fetchAnimeById(req, res, next)
 })

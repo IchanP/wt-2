@@ -54,7 +54,6 @@ export async function fetchAndThrow (url: string): Promise<JSON> {
     cache: 'no-cache'
   })
   if (!response.ok) {
-    console.log(response)
     throw new Error('Failed to fetch anime data')
   }
   return response.json()

@@ -46,6 +46,17 @@ export class ElasticRepo implements ElasticIAnimeRepo {
  }
 
  /**
+  *
+  * @param genre
+  * @param year
+  * @param nextPageStartPoint
+  * @param size
+  */
+ async searchGenreByYear (genre: string, year: number, nextPageStartPoint: Array<number>, size: number): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>> {
+
+ }
+
+ /**
   * Fetches all unique tags associated with any anime document in the database.
   *
   * @returns {Promise<BucketData[]>} The tags associated with the anime documents.

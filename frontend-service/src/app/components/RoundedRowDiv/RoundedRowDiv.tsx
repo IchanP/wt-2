@@ -22,7 +22,6 @@ const RoundedRowDiv = ({ children, maxHeight, isExpandable = false }: RoundedRow
    * Resizes the div to show all of its children.
    */
   const resizeDiv = () => {
-    console.log(isOverflowing)
     if (ref.current && isOverflowing) {
       setMaxHeight('')
       setIsOverflowing(false)

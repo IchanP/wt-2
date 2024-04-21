@@ -148,6 +148,33 @@ export class AnimeController {
   }
 
   /**
+   * Fetches the anime produced within the given genre and year range.
+   *
+   * @param {Request} req - The request object, should have the query paramaters earliest, latest and tags.
+   * @param {Response} res - The response returned to the caller.
+   * @param {NextFunction} next - The next function to call if an error occurs.
+   * @returns {Promise<Response>} The response containing the data
+   */
+  async searchGenreByYear (req: Request, res: Response, next: NextFunction) {
+    try {
+      const { earliest, latest } = this.#parseEarleistAndLatest(req)
+      const tag = req.query.tags as string
+      if (!tag) {
+        throw new InvalidQueryError('Tag must be provided')
+      }
+      const data = await this.service.searchGenreByYear(tag, { earliest, latest })
+      return res.json({ data })
+    } catch (e: unknown) {
+      let err = e as Error
+      console.error(err.message)
+      if (err instanceof InvalidQueryError) {
+        err = createError(400, err.message)
+      }
+      next(err)
+    }
+  }
+
+  /**
    * Verifies that the passed paramaters are valid numbers. Throws an error if they are not.
    *
    * @param {Request} req - The request object containing the paramaters.
@@ -157,7 +184,10 @@ export class AnimeController {
     const earliest = parseInt(req.query.earliest as string)
     const latest = parseInt(req.query.latest as string)
     if (isNaN(earliest) || isNaN(latest)) {
-      throw new Error('Earliest and latest must be numbers')
+      throw new InvalidQueryError('Earliest and latest must be numbers')
+    }
+    if (earliest > latest) {
+      throw new InvalidQueryError('Earliest must be less than latest')
     }
     return { earliest, latest }
   }
