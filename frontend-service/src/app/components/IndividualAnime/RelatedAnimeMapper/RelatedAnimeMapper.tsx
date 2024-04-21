@@ -1,5 +1,4 @@
-import { getLargestArray } from '@/app/utils'
-import { fetchAnilistImage, fetchJikanImage, fetchKitsuImage } from '@/app/utils/externalFetchers/externalImageFetcher'
+import AnimeImage from '../AnimeImage'
 
 /**
  * Maps the related anime and displayes a horizontal list of related anime and their image.
@@ -8,49 +7,56 @@ import { fetchAnilistImage, fetchJikanImage, fetchKitsuImage } from '@/app/utils
  * @param {string[]} root0.relatedAnime - An array of URLs containing links to related anime.
  * @returns {React.JSX.Element} The related anime mapper component.
  */
-const RelatedAnimeMapper = ({ relatedAnime }: {relatedAnime: string[]}) => {
-  let hostName: string = ''
-  const relatedAnimeImages: Array<ImageDisplay> = []
+const RelatedAnimeMapper = async ({ relatedAnime }: {relatedAnime: string[]}) => {
   /**
-   * Filters the hosts from the related anime URLs.
+   * Fetches all related anime from the list of URLs.
    *
-   * @param {string[]} hosts - The collection of hosts to filter.
-   * @param {string} host - The host to filter by.
-   * @returns {string[]} The filtered hosts.
+   * @returns {Promise<IAnime[]>} - A promise containing the list of related anime.
    */
-  const filterHosts = (hosts: string[], host: string) => {
-    return hosts.filter((url) => url.includes(host))
-  }
-  /**
-   * Fetches image URLs from the related anime URLs.
-   *
-   * @param {string[]} urls - The collection of URLs with an acceptable host to fetchf rom.
-   * @param {string} hostName - The name of the host to fetch from.
-   */
-  const fetchImageUrls = async (urls: string[], hostName: string) => {
-    console.log(hostName)
-    for (const url of urls) {
-      if (hostName === 'anilist.co') {
-        relatedAnimeImages.push(await fetchAnilistImage(url))
-      } else if (hostName === 'myanimelist.net') {
-        // TODO Add an interval to prevent rate limiting
-        relatedAnimeImages.push(await fetchJikanImage(url))
-      } else if (hostName === 'kitsu.io') {
-        relatedAnimeImages.push(await fetchKitsuImage(url))
+  const fetchAllRelatedAnime = async () => {
+    const fetchedAnime: IAnime[] = []
+    for (const anime of relatedAnime) {
+      const response = await fetch(`${process.env.OWN_BASE_URL}/api/anime/search`, {
+        method: 'POST',
+        cache: 'no-cache',
+        body: JSON.stringify({ keyword: anime, searchFields: ['sources'] })
+      })
+      if (response.ok) {
+        const data = await response.json()
+        fetchedAnime.push(...data.data)
+      } else {
+        continue
       }
     }
+    return fetchedAnime
   }
 
-  const anilistUrls = filterHosts(relatedAnime, 'anilist.co')
-  const malUrls = filterHosts(relatedAnime, 'myanimelist.net')
-  const kitsuUrls = filterHosts(relatedAnime, 'kitsu.io')
-  if (anilistUrls.length !== 0 && malUrls.length !== 0 && kitsuUrls.length !== 0) {
-    const largestArray = getLargestArray(anilistUrls, malUrls, kitsuUrls)
-    hostName = largestArray[0].split('/')[2]
-    fetchImageUrls(largestArray, hostName)
+  /**
+   * Filters out duplicate anime from the list based on their unique animeId.
+   *
+   * @param {IAnime[]} animeList - The list of anime to filter.
+   * @returns {IAnime[]} - An animelist with only unique anime.
+   */
+  const filterDuplicates = (animeList: IAnime[]) => {
+    return animeList.reduce((acc: IAnime[], current) => {
+      const isDuplicate = acc.some((item: IAnime) => item.animeId === current.animeId)
+      if (!isDuplicate) {
+        acc.push(current)
+      }
+      return acc
+    }, [])
   }
+
+  const unfilteredAnime = await fetchAllRelatedAnime()
+  const filteredAnime = filterDuplicates(unfilteredAnime)
   return (
         <>
+        <div className="flex flex-row gap-x-28 gap-y-2 flex-start flex-wrap">
+          {/* TODO some images are rectangles and don't fit the height properly, fix this by making the width and height auto, should also be a bit smaller... */}
+          {filteredAnime.map((anime) => (
+            <AnimeImage key={anime.animeId} anime={anime} />
+          ))}
+        </div>
         </>
   )
 }

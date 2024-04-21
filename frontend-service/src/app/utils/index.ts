@@ -71,12 +71,14 @@ export function buildMappedTags (data: Array<string>): Array<MappedTag> {
 }
 
 /**
+ * Gets the largest array from three arrays.
  *
- * @param arr1
- * @param arr2
- * @param arr3
+ * @param {Array<T>} arr1 - The first array.
+ * @param {Array<T>} arr2 - The second array.
+ * @param {Array<T>} arr3 - The third array.
+ * @returns {Array<T>} - The largest array.
  */
-export function getLargestArray (arr1, arr2, arr3) {
+export function getLargestArray (arr1: Array<unknown>, arr2: Array<unknown>, arr3: Array<unknown>): Array<unknown> {
   if (arr1.length >= arr2.length && arr1.length >= arr3.length) {
     return arr1
   } else if (arr2.length >= arr1.length && arr2.length >= arr3.length) {

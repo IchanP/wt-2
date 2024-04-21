@@ -3,6 +3,7 @@
 import LazyLoad from '@/app/components/LazyLoad'
 import SearchForm from '@/app/components/Searcher/components/SearchForm'
 import SimpleAnimeBlock from '@/app/components/SimpleAnimeBlock'
+import { sortAnimeByKeyword } from '@/app/utils/sortanime'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -25,7 +26,7 @@ const SearchClient = () => {
     const response = await fetch('api/anime/search', {
       method: 'POST',
       cache: 'no-cache',
-      body: JSON.stringify({ title: searchQuery })
+      body: JSON.stringify({ keyword: searchQuery, searchFields: ['title', 'synonyms'] })
     })
     if (!response.ok) {
       setNotFound(true)
@@ -33,8 +34,9 @@ const SearchClient = () => {
       return
     }
     const searchData = await response.json()
+    const sortedAnime = sortAnimeByKeyword(searchQuery as string, searchData.data)
     setNotFound(false)
-    setFoundAnime(searchData.data)
+    setFoundAnime(sortedAnime)
   }
 
   /**

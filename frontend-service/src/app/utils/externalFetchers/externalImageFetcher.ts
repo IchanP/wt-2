@@ -79,7 +79,7 @@ export async function fetchKitsuImage (url: string) {
  */
 export async function fetchJikanImage (url: string): Promise<ImageDisplay> {
   const id = url.split('/').pop()
-  const jikanUrl = constructJikanUrl(id)
+  const jikanUrl = constructJikanUrl(id as string)
   const jikanResponse = await fetchAndThrow(jikanUrl) as unknown as { data: { title: string, images: { webp: { large_image_url: string} } } }
   return { title: jikanResponse.data.title, image: jikanResponse.data.images.webp.large_image_url }
 }

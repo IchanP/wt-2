@@ -12,9 +12,9 @@ export const dynamic = 'force-dynamic'
 export async function POST (req: NextRequest): Promise<NextResponse> {
   // TODO error handling
   const body = await req.json()
-  const title = body.title
-  // TODO maybe make it more general purpose so require that the searchFields are passed in the body
-  const data = await fetch(process.env.BACKEND_URL + `/api/anime/search?keyword=${title}&searchFields=title+synonyms` as string, {
+  const keyword = body.keyword
+  const fields = body.searchFields.join('+')
+  const data = await fetch(process.env.BACKEND_URL + `/api/anime/search?keyword=${keyword}&searchFields=${fields}` as string, {
     // TODO may add cache?
     cache: 'no-cache'
   })
@@ -23,11 +23,10 @@ export async function POST (req: NextRequest): Promise<NextResponse> {
   if (!anime || anime.length === 0) {
     return new NextResponse(JSON.stringify({
       error: 'Not found',
-      message: 'No results were found with the provided title.'
+      message: 'No results were found with the provided query.'
     }), {
       status: 404
     })
   }
-  const sortedAnime = sortAnimeByKeyword(title, parsedData.data)
-  return NextResponse.json({ data: sortedAnime })
+  return NextResponse.json({ data: parsedData.data })
 }

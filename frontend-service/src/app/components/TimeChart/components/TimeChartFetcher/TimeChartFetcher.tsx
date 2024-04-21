@@ -19,7 +19,6 @@ const TimeChartFetcher = async (): Promise<React.JSX.Element> => {
     })
     const data = await response.json()
     const coloredTags: MappedTag[] = buildMappedTags(data.data)
-    console.log(coloredTags)
     return coloredTags.sort((a, b) => a.name.localeCompare(b.name))
   }
 
