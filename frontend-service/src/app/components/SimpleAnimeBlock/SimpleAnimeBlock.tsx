@@ -62,7 +62,7 @@ const SimpleAnimeBlock = ({ anime }: {anime: IAnime}): React.JSX.Element => {
   }
 
   return (
-        <div className={backgroundColor + ' w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
+        <div className={backgroundColor + ' rounded-md w-64 p-6 pt-3 cursor-pointer hover:bg-opacity-80 transition duration-300 ease-in-out'}>
             <Image
             src={imgSrc as string}
             width={225}

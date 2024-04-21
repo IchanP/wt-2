@@ -22,7 +22,7 @@ export function buildTimeChartTrace (data: TagData, color: string): Partial<Plot
     name: data.tag,
     x: [...years],
     y: [...totals],
-    hoverlabel: {namelength: 0},
+    hoverlabel: { namelength: 0 },
     text: data.tag,
     line: { color },
     showlegend: false

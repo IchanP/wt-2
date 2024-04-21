@@ -11,7 +11,7 @@ import { useState } from 'react'
  * @returns {React.JSX.Element} The error page.
  */
 export default function Error ({ error }: { error: Error & { digest?: string }}) {
-  const [errorMessage, setErrorMessage] = useState(error.message === 'Internal Server Error')
+  const [errorMessage] = useState(error.message === 'Internal Server Error')
   return (
     <div className="mt-20 flex flex-col items-center justify-center flex-wrap">
       <h2 className='text-8xl'>Oops!</h2>
