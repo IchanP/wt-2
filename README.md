@@ -1,29 +1,36 @@
-# Project Title
+# TITLE [TBD]
 
-Replace this with the name of your project. It should be a brief and catchy title that accurately represents your application.
+## Description
 
-## Project Description
+TITLE [TBD] is a data visualizer and a search tool for anime titles. It provides an interesting overview of the trends in the anime industry ranging back to it's surge in popularity in the 1970s and 1980s. The application also allows users to search for specific anime and view detailed information about each title.
 
-Write a brief description of your application here. The description should provide an overview of the application features, its purpose, and how it achieves the objective of the assignment. Discuss the dataset used and why it was chosen.
+The application is accessible on the web at [https://cscloud8-71.lnu.se](https://cscloud8-71.lnu.se)
 
-Describe the insights you are providing through your interactive visualization. Highlight the questions this project is intended to answer or the insights you aim to provide.
+## Features
+
+- **Total Anime Graph**: Visualize the growth in the number of anime titles since 1975.
+- **Genre Popularity Timeline**: Explore how different genres and tags have varied in popularity over the years.
+- **Search Functionality**: Look up anime by titles.
+- **Anime Detail Pages**: View detailed information about each anime title, from several sources.
+- **Genre Search**: You can display anime titles by genre by selecting a genre and year combination on the timechart or by selecting a genre tag on an individual anime page.   More robust search functionality by genre may be added in the future.
+
+## External API
+
+The application uses the [Jikan API](https://jikan.moe/) and [Kitsu's Public API](https://kitsu.docs.apiary.io/) to fetch additional information about each title and augment the existing dataset.
+
+## Limitations and Considerations
+
+The application relies heavily on a seperate internal backend API to fetch and talk with the database. This means that the application will not work without the backend service running.
 
 ## Core Technologies
 
-Include a list of the main technologies used in your project. Explain why you decided to use these technologies and what benefits they have provided in accomplishing your goals. This can include the backend framework, data analysis and processing tools, data visualization library, frontend technology, and deployment platform.
-
-## How to Use
-
-This section should contain instructions for how to use your application. Explain the controls used in your visualization and how to interact with it to uncover different insights. Providing screenshots and/or gifs can greatly help users understand how to use your application.
-
-## Link to the Deployed Application
-
-Include a link to the deployed application. The application should be hosted on a platform that allows public access.
-
-## Additional features
-
-Explain how you have addressed the assignment requirements. If you've added any custom functionality, discuss them in this section and link to the specific issues you have closed.
+- Datavisualization: [Plotly](https://plotly.com/) - Plotly is used to draw the graphs and charts in the application.
+- Framework: [Nextjs](https://nextjs.org/) - Next.js was used as the Meta framework of choice.
+- Typescript: [Typescript](https://www.typescriptlang.org/) - Typescript was used to provide static typing to the application.
+- Styling: [Tailwind CSS](https://tailwindcss.com/) - Tailwind CSS was used to style the application.
 
 ## Acknowledgements
 
-Include a list of resources you found helpful, attributions, or shoutouts here.
+- [manami-project](https://github.com/manami-project/anime-offline-database) - The app uses the anime dataset from this repository internally.
+- [Jikan API](https://jikan.moe/) - The app uses the Jikan API to fetch additional information about each anime title.
+- [Kitsu's Public API](https://kitsu.docs.apiary.io/) - The app uses Kitsu's Public API to fetch additional information about each anime title.
