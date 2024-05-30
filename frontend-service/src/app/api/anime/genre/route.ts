@@ -15,8 +15,8 @@ export async function GET (request: NextRequest): Promise<NextResponse> {
     const earliest = request.nextUrl.searchParams.get('earliest')
     const latest = request.nextUrl.searchParams.get('latest')
     const genre = request.nextUrl.searchParams.get('tags')
-    const data = await fetchAndThrow(`${process.env.BACKEND_URL}/api/anime/genre?tags=${genre}&earliest=${earliest}&latest=${latest}`)
-    return NextResponse.json({ data })
+    const response = await fetchAndThrow(`${process.env.BACKEND_URL}/api/anime/genre?tags=${genre}&earliest=${earliest}&latest=${latest}`)
+    return NextResponse.json({ data: response })
   } catch (e: unknown) {
     return new NextResponse(JSON.stringify({
       error: 'Not found',

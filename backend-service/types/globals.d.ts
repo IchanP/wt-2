@@ -74,9 +74,4 @@ declare global {
         searchAnimeByYear (nextPageStartPoint: Array<number>, size: number, yearRange: YearRange): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>
         searchGenreByYear (nextPageStartPoint: Array<number>, size: number, year: YearRange, genre: string): Promise<SearchResponse<IAnime, Record<string, AggregationsAggregate>>>
     }
-
-    enum ValidSearchFields {
-        Title = 'title',
-        Synonyms = 'synonyms'
-    }
 }

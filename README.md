@@ -1,8 +1,8 @@
-# TITLE [TBD]
+# Aninac
 
 ## Description
 
-TITLE [TBD] is a data visualizer and a search tool for anime titles. It provides an interesting overview of the trends in the anime industry ranging back to it's surge in popularity in the 1970s and 1980s. The application also allows users to search for specific anime and view detailed information about each title.
+Aninac is a data visualizer and a search tool for anime titles. It provides an interesting overview of the trends in the anime industry ranging back to it's surge in popularity in the 1970s and 1980s. The application also allows users to search for specific anime and view detailed information about each title.
 
 The application is accessible on the web at [https://cscloud8-71.lnu.se](https://cscloud8-71.lnu.se)
 

@@ -97,6 +97,7 @@ export class AnimeSearchService implements ISearchAnime {
    * @returns {Promise<IAnime[]>} The anime documents that match the conditions.
    */
   async #genericSearch (searchFn: SearchFunction, param1: YearRange | string[], param2?: string | undefined): Promise<IAnime[]> {
+    // This function violates SoC and the logic should be moved to the repository layer...
     const pageSize = 10000
     let allHits: IAnime[] = []
     let nextPageStartPoint: Array<number> = []

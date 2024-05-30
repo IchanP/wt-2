@@ -13,7 +13,7 @@ export async function fetchAnilistImage (url: string) {
   const query = constructQuery()
   const variables = { id }
   const body = JSON.stringify({ query, variables })
-  const aniListResponse = await fetchAndHandleResponse(body)
+  const aniListResponse = await fetchAndHandleAniListResponse(body)
   return { title: aniListResponse.data.Media.title.english || aniListResponse.data.Media.title.romaji, image: aniListResponse.data.Media.coverImage.medium || aniListResponse.data.Media.coverImage.large || aniListResponse.data.Media.coverImage.extraLarge }
 }
 
@@ -23,7 +23,7 @@ export async function fetchAnilistImage (url: string) {
  * @param {BodyInit} body - The request body containing the query and variables.
  * @returns {Promise<JSON>} - The JSON response from the Anilist API.
  */
-async function fetchAndHandleResponse (body: BodyInit) {
+async function fetchAndHandleAniListResponse (body: BodyInit) {
   const response = await fetch(aniListGraphQlUrl, {
     method: 'POST',
     headers: {

@@ -17,7 +17,6 @@ export class ElasticRepo implements ElasticIAnimeRepo {
   *
   * @example
   * // returns ["Oshi no Ko", "Oshin"] but does NOT return ["Moshidora"]
-  * searchAnime('Oshi', ['title']) will
   * @param {Array<number>} nextPageStartPoint - The starting point for the next page of results, gathered from the sort field of the last result. If not provided, the first page is returned.
   * @param {number} size - The size of the page. The maximum number of results to return for each call.
   * @param {string[]} fields - The name of the fields to search for the query in.
@@ -36,6 +35,8 @@ export class ElasticRepo implements ElasticIAnimeRepo {
        multi_match: {
          query,
          fields,
+         // TODO - this type causes a bug when fetching related anime, as it will match the query to the beginning of a string in the field. Meaning that https://myanimelist.net/anime/376 will match to https://myanimelist.net/anime/3765.
+         // Create a different query with a different type...
          type: 'phrase_prefix',
          slop: 10,
          max_expansions: 100
